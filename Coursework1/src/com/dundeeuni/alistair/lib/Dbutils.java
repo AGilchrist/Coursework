@@ -92,7 +92,36 @@ return;
 sqlQuery = "CREATE TABLE IF NOT EXISTS `section` ("
 + "`idsection` INT NOT NULL AUTO_INCREMENT," + "`name` VARCHAR(45) NULL,"
 + "PRIMARY KEY (`idsection`))" + "ENGINE = InnoDB;";
-
+try {
+pmst = Conn.prepareStatement(sqlQuery);
+pmst.executeUpdate();
+} catch (Exception ex) {
+System.out.println("Can not create table "+ex);
+return;
+}
+sqlQuery = "CREATE TABLE IF NOT EXISTS `reporter` ("
++ "`name` VARCHAR(30) NOT NULL," + "`email` VARCHAR(45) NULL,"
++ "PRIMARY KEY (`name`))" + "ENGINE = InnoDB;";
+try {
+pmst = Conn.prepareStatement(sqlQuery);
+pmst.executeUpdate();
+} catch (Exception ex) {
+System.out.println("Can not create table "+ex);
+return;
+}
+sqlQuery = "CREATE TABLE IF NOT EXISTS `developer` ("
++ "`name` VARCHAR(30) NOT NULL," + "`email` VARCHAR(45) NULL,"
++ "PRIMARY KEY (`name`))" + "ENGINE = InnoDB;";
+try {
+pmst = Conn.prepareStatement(sqlQuery);
+pmst.executeUpdate();
+} catch (Exception ex) {
+System.out.println("Can not create table "+ex);
+return;
+}
+sqlQuery = "CREATE TABLE IF NOT EXISTS `administrator` ("
++ "`name` VARCHAR(30) NOT NULL," + "`email` VARCHAR(45) NULL,"
++ "PRIMARY KEY (`name`))" + "ENGINE = InnoDB;";
 try {
 pmst = Conn.prepareStatement(sqlQuery);
 pmst.executeUpdate();
@@ -149,6 +178,30 @@ System.out.println("Can not insert names in sections "+ex);
 return;	
 }
 sqlQuery="INSERT INTO `fault` (`summary`,`details`,`author_idauthor`,`section_idsection`) VALUES ('Startup fails on a pi','Because the number of processors returned is zero startup fails','1','1');";
+try {
+pmst = Conn.prepareStatement(sqlQuery);
+pmst.executeUpdate();
+} catch (Exception ex) {
+System.out.println("Can not insert default fault "+ex);
+return;	
+}
+sqlQuery="INSERT INTO `reporter` (`name`,`email`) VALUES ('Edward','edward@gmail.com'),('Stacy','S.T@talktalk.net');";
+try {
+pmst = Conn.prepareStatement(sqlQuery);
+pmst.executeUpdate();
+} catch (Exception ex) {
+System.out.println("Can not insert default fault "+ex);
+return;	
+}
+sqlQuery="INSERT INTO `developer` (`name`,`email`) VALUES ('Danny','dannyboy@gmail.com'),('Shayle','shayl@gmail.com'),('Harry','HP@gmail.com');";
+try {
+pmst = Conn.prepareStatement(sqlQuery);
+pmst.executeUpdate();
+} catch (Exception ex) {
+System.out.println("Can not insert default fault "+ex);
+return;	
+}
+sqlQuery="INSERT INTO `administrator` (`name`,`email`) VALUES ('Gordon','gordan@gmail.com');";
 try {
 pmst = Conn.prepareStatement(sqlQuery);
 pmst.executeUpdate();

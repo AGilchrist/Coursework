@@ -67,11 +67,11 @@ Convertors ut = new Convertors();
 String args[]=ut.SplitRequestPath(request);
 response.setContentType("text/html");
 PrintWriter out=null;
-String summary;
-String details;
+String field1;
+String field2;
 out =	new PrintWriter(response.getOutputStream());
 
-if (args.length <5){
+if (args.length <2){
 error("Warning too few args",out);
 return;
 }
@@ -79,29 +79,28 @@ int command;
 try{
 command =(Integer)CommandsMap.get(args[2]);
 }catch(Exception et){
-error("No such table",out);
+error("You cannot create entries for a table that doesn't exist",out);
 return;
 }
 System.out.println("Command"+command);
 float faultid;
-float idauthor;
-float idsection;
+int field3;
+int field4;
 try{
-faultid=Float.parseFloat(args[3]);
-summary = args[4];
-details = args[5];
-idauthor=Float.parseFloat(args[6]);
-idsection=Float.parseFloat(args[7]);
+field1 = args[3];
+field2 = args[4];
+field3=Integer.parseInt(args[5]);
+field4=Integer.parseInt(args[6]);
 }catch(Exception et){
 error("Bad numbers in calc",out);
 return;	
 }
 switch (command){
-case 1: fault(pmst, Conn, faultid, summary, details, idauthor, idsection, out);
+case 1: fault(pmst, Conn, field1, field2, field3, field4, out);
 break;
-/*case 2: div(x,y,out);
+case 2: reporter(pmst, Conn, field1, field2);
 break;
-case 3: add(x,y,out);
+/*case 3: add(x,y,out);
 break;
 case 4: sub(x,y,out);
 break;*/
@@ -121,9 +120,8 @@ out.close();
 return;
 }
 
-private void fault(PreparedStatement pmst, Connection Conn, float faultid, String summary, String details, float idauthor, float idsection, PrintWriter out ){
-
-	String sqlQuery="INSERT INTO `fault` (`summary`,`details`,`author_idauthor`,`section_idsection`) VALUES (summary, details, idauthor, idsection);";
+private void fault(PreparedStatement pmst, Connection Conn, String summary, String details, int author, int section, PrintWriter out ){
+	String sqlQuery="INSERT INTO `fault` (`summary`,`details`,`author_idauthor`,`section_idsection`) VALUES (summary,details,'1','2');";
 	try {
 		pmst = Conn.prepareStatement(sqlQuery);
 		pmst.executeUpdate();
@@ -133,12 +131,15 @@ private void fault(PreparedStatement pmst, Connection Conn, float faultid, Strin
 		}
 }
 
-private void div(float x, float y, PrintWriter out ){
-
-float result=x/y;
-out.println("<h1>Result</h1>");
-out.println("<h2>"+result+"</h2>");
-out.close();
+private void reporter(PreparedStatement pmst, Connection Conn, String name, String email){
+	String sqlQuery="INSERT INTO `Reporter` (`summary`,`details`,`author_idauthor`,`section_idsection`) VALUES (summary, details, idauthor, idsection);";
+	try {
+		pmst = Conn.prepareStatement(sqlQuery);
+		pmst.executeUpdate();
+		} catch (Exception ex) {
+		System.out.println("Can not insert default reporter "+ex);
+		return;	
+		}
 }
 
 private void add(float x, float y, PrintWriter out ){
