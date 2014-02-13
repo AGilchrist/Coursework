@@ -44,9 +44,9 @@ private DataSource _ds = null;
    
         // TODO Auto-generated constructor stub
         CommandsMap.put("fault",1);
-//        CommandsMap.put("reporter",2);
-//        CommandsMap.put("developer",3);
-//        CommandsMap.put("administrator",4);
+        CommandsMap.put("reporter",2);
+        CommandsMap.put("developer",3);
+        CommandsMap.put("administrator",4);
     }
 
 /**
@@ -61,17 +61,20 @@ _ds=db.assemble(config);
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 PreparedStatement pmst = null;
 Connection Conn;
+String field1;
+String field2;
+int field3;
+int field4;
+
 try {
 Conn = _ds.getConnection();
 Convertors ut = new Convertors();
 String args[]=ut.SplitRequestPath(request);
 response.setContentType("text/html");
 PrintWriter out=null;
-String field1;
-String field2;
 out =	new PrintWriter(response.getOutputStream());
 
-if (args.length <2){
+if (args.length <5){
 error("Warning too few args",out);
 return;
 }
@@ -83,9 +86,6 @@ error("You cannot create entries for a table that doesn't exist",out);
 return;
 }
 System.out.println("Command"+command);
-float faultid;
-int field3;
-int field4;
 try{
 field1 = args[3];
 field2 = args[4];
@@ -98,12 +98,12 @@ return;
 switch (command){
 case 1: fault(pmst, Conn, field1, field2, field3, field4, out);
 break;
-case 2: reporter(pmst, Conn, field1, field2);
+case 2: reporter(pmst, Conn, field1, field2, out);
 break;
-/*case 3: add(x,y,out);
+case 3: developer(pmst, Conn, field1, field2, out);
 break;
-case 4: sub(x,y,out);
-break;*/
+case 4: administrator(pmst, Conn, field1, field2, out);
+break;
 default: error("No such table",out);
 }
 Conn.close();
@@ -120,41 +120,54 @@ out.close();
 return;
 }
 
-private void fault(PreparedStatement pmst, Connection Conn, String summary, String details, int author, int section, PrintWriter out ){
-	String sqlQuery="INSERT INTO `fault` (`summary`,`details`,`author_idauthor`,`section_idsection`) VALUES (summary,details,'1','2');";
+private void fault(PreparedStatement pmst, Connection Conn, String summary, String details, int reporter, int severity, PrintWriter out ) throws SQLException{
+	PreparedStatement pstmt = Conn.prepareStatement("INSERT INTO `fault`(summary,details,reporter_name,severity) VALUES (?, ?, ?, ?)");
 	try {
-		pmst = Conn.prepareStatement(sqlQuery);
-		pmst.executeUpdate();
+		pstmt.setString(1, summary);
+		pstmt.setString(2, details);
+		pstmt.setInt(3, reporter);
+		pstmt.setInt(4, severity);
+		pstmt.executeUpdate();
 		} catch (Exception ex) {
-		System.out.println("Can not insert default fault "+ex);
+		System.out.println("Cannot do that "+ex);
 		return;	
 		}
 }
 
-private void reporter(PreparedStatement pmst, Connection Conn, String name, String email){
-	String sqlQuery="INSERT INTO `Reporter` (`summary`,`details`,`author_idauthor`,`section_idsection`) VALUES (summary, details, idauthor, idsection);";
+private void reporter(PreparedStatement pmst, Connection Conn, String name, String email, PrintWriter out )throws SQLException{
+	PreparedStatement pstmt = Conn.prepareStatement("INSERT INTO `reporter`(name, email) VALUES (?, ?)");
 	try {
-		pmst = Conn.prepareStatement(sqlQuery);
-		pmst.executeUpdate();
+		pstmt.setString(1, name);
+		pstmt.setString(2, email);
+		pstmt.executeUpdate();
 		} catch (Exception ex) {
-		System.out.println("Can not insert default reporter "+ex);
+		System.out.println("Cannot do that "+ex);
 		return;	
 		}
 }
 
-private void add(float x, float y, PrintWriter out ){
-
-float result=x+y;
-out.println("<h1>Result</h1>");
-out.println("<h2>"+result+"</h2>");
-out.close();
+private void developer(PreparedStatement pmst, Connection Conn, String name, String email, PrintWriter out )throws SQLException{
+	PreparedStatement pstmt = Conn.prepareStatement("INSERT INTO `developer`(name, email) VALUES (?, ?)");
+	try {
+		pstmt.setString(1, name);
+		pstmt.setString(2, email);
+		pstmt.executeUpdate();
+		} catch (Exception ex) {
+		System.out.println("Cannot do that "+ex);
+		return;	
+		}
 }
-private void sub(float x, float y, PrintWriter out ){
 
-float result=x-y;
-out.println("<h1>Result</h1>");
-out.println("<h2>"+result+"</h2>");
-out.close();
+private void administrator(PreparedStatement pmst, Connection Conn, String name, String email, PrintWriter out )throws SQLException{
+	PreparedStatement pstmt = Conn.prepareStatement("INSERT INTO `administrator`(name, email) VALUES (?, ?)");
+	try {
+		pstmt.setString(1, name);
+		pstmt.setString(2, email);
+		pstmt.executeUpdate();
+		} catch (Exception ex) {
+		System.out.println("Cannot do that "+ex);
+		return;	
+		}
 }
 
 /**

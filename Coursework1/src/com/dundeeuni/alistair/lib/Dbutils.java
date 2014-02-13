@@ -134,12 +134,18 @@ sqlQuery = "CREATE TABLE IF NOT EXISTS `fault` ("
 + "`details` VARCHAR(100) NULL,"
 + "`author_idauthor` INT NOT NULL,"
 + "`section_idsection` INT NOT NULL,"
++ "`reporter_name` VARCHAR(30) NOT NULL,"
++ "`severity` INT NOT NULL,"
 + "PRIMARY KEY (`idfault`),"
 + "INDEX `fk_fault_author_idx` (`author_idauthor` ASC),"
 + "INDEX `fk_fault_section1_idx` (`section_idsection` ASC),"
 + "CONSTRAINT `fk_fault_author`"
 + " FOREIGN KEY (`author_idauthor`)"
 + " REFERENCES `author` (`idauthor`)"
++ "ON DELETE NO ACTION" + " ON UPDATE NO ACTION,"
++ "CONSTRAINT `fk_reporter_name`"
++ " FOREIGN KEY (`reporter_name`)"
++ " REFERENCES `reporter` (`name`)"
 + "ON DELETE NO ACTION" + " ON UPDATE NO ACTION,"
 + "CONSTRAINT `fk_fault_section1`"
 + " FOREIGN KEY (`section_idsection`)"
@@ -177,14 +183,6 @@ pmst.executeUpdate();
 System.out.println("Can not insert names in sections "+ex);
 return;	
 }
-sqlQuery="INSERT INTO `fault` (`summary`,`details`,`author_idauthor`,`section_idsection`) VALUES ('Startup fails on a pi','Because the number of processors returned is zero startup fails','1','1');";
-try {
-pmst = Conn.prepareStatement(sqlQuery);
-pmst.executeUpdate();
-} catch (Exception ex) {
-System.out.println("Can not insert default fault "+ex);
-return;	
-}
 sqlQuery="INSERT INTO `reporter` (`name`,`email`) VALUES ('Edward','edward@gmail.com'),('Stacy','S.T@talktalk.net');";
 try {
 pmst = Conn.prepareStatement(sqlQuery);
@@ -202,6 +200,14 @@ System.out.println("Can not insert default fault "+ex);
 return;	
 }
 sqlQuery="INSERT INTO `administrator` (`name`,`email`) VALUES ('Gordon','gordan@gmail.com');";
+try {
+pmst = Conn.prepareStatement(sqlQuery);
+pmst.executeUpdate();
+} catch (Exception ex) {
+System.out.println("Can not insert default fault "+ex);
+return;	
+}
+sqlQuery="INSERT INTO `fault` (`summary`,`details`,`author_idauthor`,`section_idsection`,`reporter_name`,`severity`) VALUES ('Startup fails on a pi','Because the number of processors returned is zero startup fails','1','1','Edward','1');";
 try {
 pmst = Conn.prepareStatement(sqlQuery);
 pmst.executeUpdate();
