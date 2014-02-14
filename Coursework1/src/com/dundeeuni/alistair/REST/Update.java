@@ -44,9 +44,9 @@ private DataSource _ds = null;
    
         // TODO Auto-generated constructor stub
         CommandsMap.put("fault",1);
-//        CommandsMap.put("reporter",2);
-//        CommandsMap.put("developer",3);
-//        CommandsMap.put("administrator",4);
+        CommandsMap.put("reporter",2);
+        CommandsMap.put("developer",3);
+        CommandsMap.put("admin",4);
     }
 
 /**
@@ -61,14 +61,20 @@ _ds=db.assemble(config);
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 PreparedStatement pmst = null;
 Connection Conn;
+String field1;
+String field2;
+String field3;
+String field6;
+int field4;
+int field5;
+int field7;
+
 try {
 Conn = _ds.getConnection();
 Convertors ut = new Convertors();
 String args[]=ut.SplitRequestPath(request);
 response.setContentType("text/html");
 PrintWriter out=null;
-String summary;
-String details;
 out =	new PrintWriter(response.getOutputStream());
 
 if (args.length <5){
@@ -79,32 +85,31 @@ int command;
 try{
 command =(Integer)CommandsMap.get(args[2]);
 }catch(Exception et){
-error("No such table",out);
+error("You cannot create entries for a table that doesn't exist",out);
 return;
 }
 System.out.println("Command"+command);
-float faultid;
-float idauthor;
-float idsection;
 try{
-faultid=Float.parseFloat(args[3]);
-summary = args[4];
-details = args[5];
-idauthor=Float.parseFloat(args[6]);
-idsection=Float.parseFloat(args[7]);
+field1 = args[3];
+field2 = args[4];
+field3 = args[5];
+field4=Integer.parseInt(args[6]);
+field5=Integer.parseInt(args[7]);
+field6 = args[8];
+field7=Integer.parseInt(args[9]);
 }catch(Exception et){
 error("Bad numbers in calc",out);
 return;	
 }
 switch (command){
-case 1: fault(pmst, Conn, faultid, summary, details, idauthor, idsection, out);
+case 1: fault(pmst, Conn, field1, field2, field3, field4, field5, field6, field7, out);
 break;
-/*case 2: div(x,y,out);
+case 2: reporter(pmst, Conn, field1, field2, field3, out);
 break;
-case 3: add(x,y,out);
+case 3: developer(pmst, Conn, field1, field2, field3, out);
 break;
-case 4: sub(x,y,out);
-break;*/
+case 4: administrator(pmst, Conn, field1, field2, field3, out);
+break;
 default: error("No such table",out);
 }
 Conn.close();
@@ -121,39 +126,60 @@ out.close();
 return;
 }
 
-private void fault(PreparedStatement pmst, Connection Conn, float faultid, String summary, String details, float idauthor, float idsection, PrintWriter out ){
-
-	String sqlQuery="UPDATE `fault` SET (`summary`,`details`,`author_idauthor`,`section_idsection`) VALUES (summary, details, idauthor, idsection);";
+private void fault(PreparedStatement pmst, Connection Conn, String oldid, String summary, String details, int author, int section, String reporter, int severity, PrintWriter out ) throws SQLException{
+	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `fault` SET(summary,details,author_idauthor, section_idsection, reporter_name,severity) = (?, ?, ?, ?, ?, ?) WHERE idfault = ?");
 	try {
-		pmst = Conn.prepareStatement(sqlQuery);
-		pmst.executeUpdate();
+		pstmt.setString(1, summary);
+		pstmt.setString(2, details);
+		pstmt.setInt(3, author);
+		pstmt.setInt(4, section);
+		pstmt.setString(5, reporter);
+		pstmt.setInt(6, severity);
+		pstmt.setString(7, oldid);
+		pstmt.executeUpdate();
 		} catch (Exception ex) {
-		System.out.println("Can not insert default fault "+ex);
+		System.out.println("Cannot do that "+ex);
 		return;	
 		}
 }
 
-private void div(float x, float y, PrintWriter out ){
-
-float result=x/y;
-out.println("<h1>Result</h1>");
-out.println("<h2>"+result+"</h2>");
-out.close();
+private void reporter(PreparedStatement pmst, Connection Conn, String oldname, String name, String email, PrintWriter out )throws SQLException{
+	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `reporter` SET name = ? " + ", email = ? " + " WHERE name = ?");
+	try {
+		pstmt.setString(1, name);
+		pstmt.setString(2, email);
+		pstmt.setString(3, oldname);
+		pstmt.executeUpdate();
+		} catch (Exception ex) {
+		System.out.println("Cannot do that "+ex);
+		return;	
+		}
 }
 
-private void add(float x, float y, PrintWriter out ){
-
-float result=x+y;
-out.println("<h1>Result</h1>");
-out.println("<h2>"+result+"</h2>");
-out.close();
+private void developer(PreparedStatement pmst, Connection Conn, String oldname, String name, String email, PrintWriter out )throws SQLException{
+	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `reporter` SET(name, email) = (?, ?) WHERE name = ?");
+	try {
+		pstmt.setString(1, name);
+		pstmt.setString(2, email);
+		pstmt.setString(3, oldname);
+		pstmt.executeUpdate();
+		} catch (Exception ex) {
+		System.out.println("Cannot do that "+ex);
+		return;	
+		}
 }
-private void sub(float x, float y, PrintWriter out ){
 
-float result=x-y;
-out.println("<h1>Result</h1>");
-out.println("<h2>"+result+"</h2>");
-out.close();
+private void administrator(PreparedStatement pmst, Connection Conn, String oldname, String name, String email, PrintWriter out )throws SQLException{
+	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `reporter` SET(name, email) = (?, ?) WHERE name = ?");
+	try {
+		pstmt.setString(1, name);
+		pstmt.setString(2, email);
+		pstmt.setString(3, oldname);
+		pstmt.executeUpdate();
+		} catch (Exception ex) {
+		System.out.println("Cannot do that "+ex);
+		return;	
+		}
 }
 
 /**

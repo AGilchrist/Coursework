@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import com.dundeeuni.alistair.lib.*;
+import com.dundeeuni.alistair.pages.*;
 /**
 * Servlet implementation class Math
 */
@@ -47,7 +49,7 @@ private DataSource _ds = null;
         CommandsMap.put("fault",1);
         CommandsMap.put("reporter",2);
         CommandsMap.put("developer",3);
-        CommandsMap.put("administrator",4);
+        CommandsMap.put("admin",4);
     }
 
 /**
@@ -113,7 +115,7 @@ private void fault(PreparedStatement pmst, Connection Conn, String faultid, Prin
 	if(faultid == null){
 		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault`");
 		try {
-			pstmt.executeUpdate();
+			pstmt.executeQuery();
 			} catch (Exception ex) {
 			System.out.println("Cannot do that "+ex);
 			return;	
@@ -122,7 +124,7 @@ private void fault(PreparedStatement pmst, Connection Conn, String faultid, Prin
 	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault` WHERE idfault = ?");
 	try {
 		pstmt.setString(1, faultid);
-		pstmt.executeUpdate();
+		pstmt.executeQuery();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
 		return;	
@@ -134,7 +136,7 @@ private void reporter(PreparedStatement pmst, Connection Conn, String name, Prin
 	if(name == null){
 		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault`");
 		try {
-			pstmt.executeUpdate();
+			pstmt.executeQuery();
 			} catch (Exception ex) {
 			System.out.println("Cannot do that "+ex);
 			return;	
@@ -143,7 +145,7 @@ private void reporter(PreparedStatement pmst, Connection Conn, String name, Prin
 	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault` WHERE idfault = ?");
 	try {
 		pstmt.setString(1, name);
-		pstmt.executeUpdate();
+		pstmt.executeQuery();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
 		return;	
@@ -155,16 +157,26 @@ private void developer(PreparedStatement pmst, Connection Conn, String name, Pri
 	if(name == null){
 		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault`");
 		try {
-			pstmt.executeUpdate();
+			ResultSet rs = pstmt.executeQuery();
+	        while (rs.next()) {
+	            String outputname = rs.getString("name");
+	            String outputemail = rs.getString("email");
+	            System.out.println(outputname);
+	        }
 			} catch (Exception ex) {
 			System.out.println("Cannot do that "+ex);
 			return;	
 			}
 	}else{
 	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault` WHERE idfault = ?");
+	pstmt.setString(1, name);
 	try {
-		pstmt.setString(1, name);
-		pstmt.executeUpdate();
+		ResultSet rs = pstmt.executeQuery();
+        while (rs.next()) {
+            String outputname = rs.getString("name");
+            String outputemail = rs.getString("email");
+            System.out.println(outputname);
+        }
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
 		return;	
@@ -176,16 +188,16 @@ private void administrator(PreparedStatement pmst, Connection Conn, String name,
 	if(name == null){
 		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault`");
 		try {
-			pstmt.executeUpdate();
+			pstmt.executeQuery();
 			} catch (Exception ex) {
 			System.out.println("Cannot do that "+ex);
 			return;	
 			}
 	}else{
 	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault` WHERE idfault = ?");
+	pstmt.setString(1, name);
 	try {
-		pstmt.setString(1, name);
-		pstmt.executeUpdate();
+		pstmt.executeQuery();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
 		return;	

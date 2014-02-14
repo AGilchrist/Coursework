@@ -46,7 +46,7 @@ private DataSource _ds = null;
         CommandsMap.put("fault",1);
         CommandsMap.put("reporter",2);
         CommandsMap.put("developer",3);
-        CommandsMap.put("administrator",4);
+        CommandsMap.put("admin",4);
     }
 
 /**
@@ -63,8 +63,10 @@ PreparedStatement pmst = null;
 Connection Conn;
 String field1;
 String field2;
+String field5;
 int field3;
 int field4;
+int field6;
 
 try {
 Conn = _ds.getConnection();
@@ -91,12 +93,14 @@ field1 = args[3];
 field2 = args[4];
 field3=Integer.parseInt(args[5]);
 field4=Integer.parseInt(args[6]);
+field5 = args[7];
+field6=Integer.parseInt(args[8]);
 }catch(Exception et){
 error("Bad numbers in calc",out);
 return;	
 }
 switch (command){
-case 1: fault(pmst, Conn, field1, field2, field3, field4, out);
+case 1: fault(pmst, Conn, field1, field2, field3, field4, field5, field6, out);
 break;
 case 2: reporter(pmst, Conn, field1, field2, out);
 break;
@@ -120,13 +124,15 @@ out.close();
 return;
 }
 
-private void fault(PreparedStatement pmst, Connection Conn, String summary, String details, int reporter, int severity, PrintWriter out ) throws SQLException{
-	PreparedStatement pstmt = Conn.prepareStatement("INSERT INTO `fault`(summary,details,reporter_name,severity) VALUES (?, ?, ?, ?)");
+private void fault(PreparedStatement pmst, Connection Conn, String summary, String details, int author, int section, String reporter, int severity, PrintWriter out ) throws SQLException{
+	PreparedStatement pstmt = Conn.prepareStatement("INSERT INTO `fault`(summary,details,author_idauthor, section_idsection, reporter_name,severity) VALUES (?, ?, ?, ?, ?, ?)");
 	try {
 		pstmt.setString(1, summary);
 		pstmt.setString(2, details);
-		pstmt.setInt(3, reporter);
-		pstmt.setInt(4, severity);
+		pstmt.setInt(3, author);
+		pstmt.setInt(4, section);
+		pstmt.setString(5, reporter);
+		pstmt.setInt(6, severity);
 		pstmt.executeUpdate();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
