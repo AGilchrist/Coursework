@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -81,11 +82,10 @@ command =(Integer)CommandsMap.get(args[2]);
 error("You cannot create entries for a table that doesn't exist",out);
 return;
 }
-System.out.println("Command"+command);
-if (args[3] == null) 
-{field1 = null;}
-else{
-field1 = args[3];}
+if (args.length <4){
+	field1 = null;
+}else{
+	field1 = args[3];}
 switch (command){
 case 1: fault(pmst, Conn, field1, out);
 break;
@@ -111,20 +111,38 @@ out.close();
 return;
 }
 
+private void print(ResultSet rs, PrintWriter out) throws SQLException{
+	ResultSetMetaData meta = rs.getMetaData();
+    int numberofcolumns = meta.getColumnCount();
+    while (rs.next()) {
+        for (int i = 1; i <= numberofcolumns; i++) {
+            if (i > 1) out.print(",\t");
+            String Value = rs.getString(i);
+            out.print(meta.getColumnName(i) + ":\t" + Value);
+            System.out.println(Value);
+        }
+        out.println("\t");
+    }  
+out.close();
+return;
+}
+
 private void fault(PreparedStatement pmst, Connection Conn, String faultid, PrintWriter out ) throws SQLException{
 	if(faultid == null){
 		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault`");
 		try {
-			pstmt.executeQuery();
+			ResultSet rs = pstmt.executeQuery();
+			print(rs,out);
 			} catch (Exception ex) {
 			System.out.println("Cannot do that "+ex);
 			return;	
 			}
 	}else{
 	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault` WHERE idfault = ?");
+	pstmt.setString(1, faultid);
 	try {
-		pstmt.setString(1, faultid);
-		pstmt.executeQuery();
+		ResultSet rs = pstmt.executeQuery();
+		print(rs,out);
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
 		return;	
@@ -134,18 +152,20 @@ private void fault(PreparedStatement pmst, Connection Conn, String faultid, Prin
 
 private void reporter(PreparedStatement pmst, Connection Conn, String name, PrintWriter out ) throws SQLException{
 	if(name == null){
-		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault`");
+		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `reporter`");
 		try {
-			pstmt.executeQuery();
+			ResultSet rs = pstmt.executeQuery();
+			print(rs,out);
 			} catch (Exception ex) {
 			System.out.println("Cannot do that "+ex);
 			return;	
 			}
 	}else{
-	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault` WHERE idfault = ?");
+	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `reporter` WHERE name = ?");
+	pstmt.setString(1, name);
 	try {
-		pstmt.setString(1, name);
-		pstmt.executeQuery();
+		ResultSet rs = pstmt.executeQuery();
+		print(rs,out);
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
 		return;	
@@ -155,28 +175,20 @@ private void reporter(PreparedStatement pmst, Connection Conn, String name, Prin
 
 private void developer(PreparedStatement pmst, Connection Conn, String name, PrintWriter out ) throws SQLException{
 	if(name == null){
-		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault`");
+		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `developer`");
 		try {
 			ResultSet rs = pstmt.executeQuery();
-	        while (rs.next()) {
-	            String outputname = rs.getString("name");
-	            String outputemail = rs.getString("email");
-	            System.out.println(outputname);
-	        }
+			print(rs,out);
 			} catch (Exception ex) {
 			System.out.println("Cannot do that "+ex);
 			return;	
 			}
 	}else{
-	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault` WHERE idfault = ?");
-	pstmt.setString(1, name);
+	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `developer` WHERE name = 'Harry'");
+	//pstmt.setString(1, name);
 	try {
 		ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
-            String outputname = rs.getString("name");
-            String outputemail = rs.getString("email");
-            System.out.println(outputname);
-        }
+		print(rs,out);
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
 		return;	
@@ -186,18 +198,20 @@ private void developer(PreparedStatement pmst, Connection Conn, String name, Pri
 
 private void administrator(PreparedStatement pmst, Connection Conn, String name, PrintWriter out ) throws SQLException{
 	if(name == null){
-		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault`");
+		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `administrator`");
 		try {
-			pstmt.executeQuery();
+			ResultSet rs = pstmt.executeQuery();
+			print(rs,out);
 			} catch (Exception ex) {
 			System.out.println("Cannot do that "+ex);
 			return;	
 			}
 	}else{
-	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault` WHERE idfault = ?");
+	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `administrator` WHERE name = ?");
 	pstmt.setString(1, name);
 	try {
-		pstmt.executeQuery();
+		ResultSet rs = pstmt.executeQuery();
+		print(rs,out);
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
 		return;	

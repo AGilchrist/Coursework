@@ -126,13 +126,13 @@ return;
 
 private void fault(PreparedStatement pmst, Connection Conn, String summary, String details, int author, int section, String reporter, int severity, PrintWriter out ) throws SQLException{
 	PreparedStatement pstmt = Conn.prepareStatement("INSERT INTO `fault`(summary,details,author_idauthor, section_idsection, reporter_name,severity) VALUES (?, ?, ?, ?, ?, ?)");
+	pstmt.setString(1, summary);
+	pstmt.setString(2, details);
+	pstmt.setInt(3, author);
+	pstmt.setInt(4, section);
+	pstmt.setString(5, reporter);
+	pstmt.setInt(6, severity);
 	try {
-		pstmt.setString(1, summary);
-		pstmt.setString(2, details);
-		pstmt.setInt(3, author);
-		pstmt.setInt(4, section);
-		pstmt.setString(5, reporter);
-		pstmt.setInt(6, severity);
 		pstmt.executeUpdate();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
@@ -142,9 +142,9 @@ private void fault(PreparedStatement pmst, Connection Conn, String summary, Stri
 
 private void reporter(PreparedStatement pmst, Connection Conn, String name, String email, PrintWriter out )throws SQLException{
 	PreparedStatement pstmt = Conn.prepareStatement("INSERT INTO `reporter`(name, email) VALUES (?, ?)");
+	pstmt.setString(1, name);
+	pstmt.setString(2, email);
 	try {
-		pstmt.setString(1, name);
-		pstmt.setString(2, email);
 		pstmt.executeUpdate();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
@@ -154,9 +154,9 @@ private void reporter(PreparedStatement pmst, Connection Conn, String name, Stri
 
 private void developer(PreparedStatement pmst, Connection Conn, String name, String email, PrintWriter out )throws SQLException{
 	PreparedStatement pstmt = Conn.prepareStatement("INSERT INTO `developer`(name, email) VALUES (?, ?)");
+	pstmt.setString(1, name);
+	pstmt.setString(2, email);
 	try {
-		pstmt.setString(1, name);
-		pstmt.setString(2, email);
 		pstmt.executeUpdate();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
@@ -166,9 +166,9 @@ private void developer(PreparedStatement pmst, Connection Conn, String name, Str
 
 private void administrator(PreparedStatement pmst, Connection Conn, String name, String email, PrintWriter out )throws SQLException{
 	PreparedStatement pstmt = Conn.prepareStatement("INSERT INTO `administrator`(name, email) VALUES (?, ?)");
+	pstmt.setString(1, name);
+	pstmt.setString(2, email);
 	try {
-		pstmt.setString(1, name);
-		pstmt.setString(2, email);
 		pstmt.executeUpdate();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);

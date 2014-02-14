@@ -128,14 +128,14 @@ return;
 
 private void fault(PreparedStatement pmst, Connection Conn, String oldid, String summary, String details, int author, int section, String reporter, int severity, PrintWriter out ) throws SQLException{
 	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `fault` SET(summary,details,author_idauthor, section_idsection, reporter_name,severity) = (?, ?, ?, ?, ?, ?) WHERE idfault = ?");
+	pstmt.setString(1, summary);
+	pstmt.setString(2, details);
+	pstmt.setInt(3, author);
+	pstmt.setInt(4, section);
+	pstmt.setString(5, reporter);
+	pstmt.setInt(6, severity);
+	pstmt.setString(7, oldid);
 	try {
-		pstmt.setString(1, summary);
-		pstmt.setString(2, details);
-		pstmt.setInt(3, author);
-		pstmt.setInt(4, section);
-		pstmt.setString(5, reporter);
-		pstmt.setInt(6, severity);
-		pstmt.setString(7, oldid);
 		pstmt.executeUpdate();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
@@ -145,10 +145,10 @@ private void fault(PreparedStatement pmst, Connection Conn, String oldid, String
 
 private void reporter(PreparedStatement pmst, Connection Conn, String oldname, String name, String email, PrintWriter out )throws SQLException{
 	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `reporter` SET name = ? " + ", email = ? " + " WHERE name = ?");
+	pstmt.setString(1, name);
+	pstmt.setString(2, email);
+	pstmt.setString(3, oldname);
 	try {
-		pstmt.setString(1, name);
-		pstmt.setString(2, email);
-		pstmt.setString(3, oldname);
 		pstmt.executeUpdate();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
@@ -158,10 +158,10 @@ private void reporter(PreparedStatement pmst, Connection Conn, String oldname, S
 
 private void developer(PreparedStatement pmst, Connection Conn, String oldname, String name, String email, PrintWriter out )throws SQLException{
 	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `reporter` SET(name, email) = (?, ?) WHERE name = ?");
+	pstmt.setString(1, name);
+	pstmt.setString(2, email);
+	pstmt.setString(3, oldname);
 	try {
-		pstmt.setString(1, name);
-		pstmt.setString(2, email);
-		pstmt.setString(3, oldname);
 		pstmt.executeUpdate();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
@@ -171,10 +171,10 @@ private void developer(PreparedStatement pmst, Connection Conn, String oldname, 
 
 private void administrator(PreparedStatement pmst, Connection Conn, String oldname, String name, String email, PrintWriter out )throws SQLException{
 	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `reporter` SET(name, email) = (?, ?) WHERE name = ?");
+	pstmt.setString(1, name);
+	pstmt.setString(2, email);
+	pstmt.setString(3, oldname);
 	try {
-		pstmt.setString(1, name);
-		pstmt.setString(2, email);
-		pstmt.setString(3, oldname);
 		pstmt.executeUpdate();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);

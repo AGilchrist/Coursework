@@ -116,8 +116,8 @@ return;
 
 private void fault(PreparedStatement pmst, Connection Conn, String id, PrintWriter out ) throws SQLException{
 	PreparedStatement pstmt = Conn.prepareStatement("DELETE FROM `fault` WHERE idfault = ?");
+	pstmt.setString(1, id);
 	try {
-		pstmt.setString(1, id);
 		pstmt.executeUpdate();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
@@ -127,8 +127,8 @@ private void fault(PreparedStatement pmst, Connection Conn, String id, PrintWrit
 
 private void reporter(PreparedStatement pmst, Connection Conn, String id, PrintWriter out )throws SQLException{
 	PreparedStatement pstmt = Conn.prepareStatement("DELETE FROM `reporter` WHERE name = ?");
+	pstmt.setString(1, id);
 	try {
-		pstmt.setString(1, id);
 		pstmt.executeUpdate();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
@@ -138,8 +138,8 @@ private void reporter(PreparedStatement pmst, Connection Conn, String id, PrintW
 
 private void developer(PreparedStatement pmst, Connection Conn, String id, PrintWriter out )throws SQLException{
 	PreparedStatement pstmt = Conn.prepareStatement("DELETE FROM `developer` WHERE name = ?");
+	pstmt.setString(1, id);
 	try {
-		pstmt.setString(1, id);
 		pstmt.executeUpdate();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
@@ -149,8 +149,8 @@ private void developer(PreparedStatement pmst, Connection Conn, String id, Print
 
 private void administrator(PreparedStatement pmst, Connection Conn, String id, PrintWriter out )throws SQLException{
 	PreparedStatement pstmt = Conn.prepareStatement("DELETE FROM `administrator` WHERE name = ?");
+	pstmt.setString(1, id);
 	try {
-		pstmt.setString(1, id);
 		pstmt.executeUpdate();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
