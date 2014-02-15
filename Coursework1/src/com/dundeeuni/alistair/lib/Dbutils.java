@@ -80,7 +80,7 @@ Conn = _ds.getConnection();
 return;
 }
 String sqlQuery = "CREATE TABLE IF NOT EXISTS `author` ("
-+ "`idauthor` INT NOT NULL AUTO_INCREMENT," + "`name` VARCHAR(45) NULL,"
++ "`idauthor` INT NOT NULL AUTO_INCREMENT," + "`name` VARCHAR(45) NULL," + "`email` VARCHAR(45) NULL,"
 + "PRIMARY KEY (`idauthor`))" + "ENGINE = InnoDB;";
 try {
 pmst = Conn.prepareStatement(sqlQuery);
@@ -99,19 +99,9 @@ pmst.executeUpdate();
 System.out.println("Can not create table "+ex);
 return;
 }
-sqlQuery = "CREATE TABLE IF NOT EXISTS `reporter` ("
-+ "`name` VARCHAR(30) NOT NULL," + "`email` VARCHAR(45) NULL,"
-+ "PRIMARY KEY (`name`))" + "ENGINE = InnoDB;";
-try {
-pmst = Conn.prepareStatement(sqlQuery);
-pmst.executeUpdate();
-} catch (Exception ex) {
-System.out.println("Can not create table "+ex);
-return;
-}
 sqlQuery = "CREATE TABLE IF NOT EXISTS `developer` ("
-+ "`name` VARCHAR(30) NOT NULL," + "`email` VARCHAR(45) NULL,"
-+ "PRIMARY KEY (`name`))" + "ENGINE = InnoDB;";
++ "`iddeveloper` INT NOT NULL AUTO_INCREMENT," + "`name` VARCHAR(30) NOT NULL," + "`email` VARCHAR(45) NULL,"
++ "PRIMARY KEY (`iddeveloper`))" + "ENGINE = InnoDB;";
 try {
 pmst = Conn.prepareStatement(sqlQuery);
 pmst.executeUpdate();
@@ -120,8 +110,8 @@ System.out.println("Can not create table "+ex);
 return;
 }
 sqlQuery = "CREATE TABLE IF NOT EXISTS `administrator` ("
-+ "`name` VARCHAR(30) NOT NULL," + "`email` VARCHAR(45) NULL,"
-+ "PRIMARY KEY (`name`))" + "ENGINE = InnoDB;";
++ "`idadministrator` INT NOT NULL AUTO_INCREMENT," + "`name` VARCHAR(30) NOT NULL," + "`email` VARCHAR(45) NULL,"
++ "PRIMARY KEY (`idadministrator`))" + "ENGINE = InnoDB;";
 try {
 pmst = Conn.prepareStatement(sqlQuery);
 pmst.executeUpdate();
@@ -134,7 +124,6 @@ sqlQuery = "CREATE TABLE IF NOT EXISTS `fault` ("
 + "`details` VARCHAR(100) NULL,"
 + "`author_idauthor` INT NOT NULL,"
 + "`section_idsection` INT NOT NULL,"
-+ "`reporter_name` VARCHAR(30) NOT NULL,"
 + "`severity` INT NOT NULL,"
 + "PRIMARY KEY (`idfault`),"
 + "INDEX `fk_fault_author_idx` (`author_idauthor` ASC),"
@@ -142,10 +131,6 @@ sqlQuery = "CREATE TABLE IF NOT EXISTS `fault` ("
 + "CONSTRAINT `fk_fault_author`"
 + " FOREIGN KEY (`author_idauthor`)"
 + " REFERENCES `author` (`idauthor`)"
-+ "ON DELETE NO ACTION" + " ON UPDATE NO ACTION,"
-+ "CONSTRAINT `fk_reporter_name`"
-+ " FOREIGN KEY (`reporter_name`)"
-+ " REFERENCES `reporter` (`name`)"
 + "ON DELETE NO ACTION" + " ON UPDATE NO ACTION,"
 + "CONSTRAINT `fk_fault_section1`"
 + " FOREIGN KEY (`section_idsection`)"
@@ -167,7 +152,7 @@ if(rs.next()) {
 int rows = rs.getInt(1);
 System.out.println("Number of Rows " + rows);
 if (rows==0){
-sqlQuery="INSERT INTO `author` (`name`) VALUES ('Andy'),('Tracey'),('Tom'),('Bill');";
+sqlQuery="INSERT INTO `author` (`name`,`email`) VALUES ('Andy','a.e.cobley@dundee.ac.uk'),('Tracey','tracy@talktalk.net'),('Tom','TomB@tiscali.co.uk'),('Bill','BG@gmail.com');";
 try {
 pmst = Conn.prepareStatement(sqlQuery);
 pmst.executeUpdate();
@@ -181,14 +166,6 @@ pmst = Conn.prepareStatement(sqlQuery);
 pmst.executeUpdate();
 } catch (Exception ex) {
 System.out.println("Can not insert names in sections "+ex);
-return;	
-}
-sqlQuery="INSERT INTO `reporter` (`name`,`email`) VALUES ('Edward','edward@gmail.com'),('Stacy','S.T@talktalk.net');";
-try {
-pmst = Conn.prepareStatement(sqlQuery);
-pmst.executeUpdate();
-} catch (Exception ex) {
-System.out.println("Can not insert default fault "+ex);
 return;	
 }
 sqlQuery="INSERT INTO `developer` (`name`,`email`) VALUES ('Danny','dannyboy@gmail.com'),('Shayle','shayl@gmail.com'),('Harry','HP@gmail.com');";
@@ -207,7 +184,7 @@ pmst.executeUpdate();
 System.out.println("Can not insert default fault "+ex);
 return;	
 }
-sqlQuery="INSERT INTO `fault` (`summary`,`details`,`author_idauthor`,`section_idsection`,`reporter_name`,`severity`) VALUES ('Startup fails on a pi','Because the number of processors returned is zero startup fails','1','1','Edward','1');";
+sqlQuery="INSERT INTO `fault` (`summary`,`details`,`author_idauthor`,`section_idsection`,`severity`) VALUES ('Startup fails on a pi','Because the number of processors returned is zero startup fails','1','1','1');";
 try {
 pmst = Conn.prepareStatement(sqlQuery);
 pmst.executeUpdate();

@@ -71,7 +71,7 @@ response.setContentType("text/html");
 PrintWriter out=null;
 out =	new PrintWriter(response.getOutputStream());
 
-if (args.length <3){
+if (args.length <4){
 error("Warning too few args",out);
 return;
 }

@@ -4,11 +4,28 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Start Page</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+$('#slectboxid option').click(function(){
+	 $('selectboxid').val(destination );
+});
+});
+
+</script>
 </head>
 <body>
-<% 
-//http://localhost:8080/Coursework1/Read/developer
-%>
+<p>Select the action you want to carry out</p>
+<form action="#">
+<select name="URL" onchange="window.location.href= this.form.URL.options[this.form.URL.selectedIndex].value">
+<option>      </option>
+<option value="http://localhost:8080/Coursework1/pages/create.jsp">Create</option>
+<option value="http://localhost:8080/Coursework1/pages/read.jsp">Read</option>
+<option value="http://localhost:8080/Coursework1/pages/update.jsp">Update</option>
+<option value="http://localhost:8080/Coursework1/pages/delete.jsp">Delete</option>
+</select>
+<p></p>
+</form>
 </body>
 </html>

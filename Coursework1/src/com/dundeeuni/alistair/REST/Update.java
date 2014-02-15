@@ -102,7 +102,13 @@ error("Bad numbers in calc",out);
 return;	
 }
 switch (command){
-case 1: fault(pmst, Conn, field1, field2, field3, field4, field5, field6, field7, out);
+case 1: {
+	if (args.length <10){
+		error("Warning too few args for this command",out);
+		return;
+		}else{
+			fault(pmst, Conn, field1, field2, field3, field4, field5, field6, field7, out);}
+		}
 break;
 case 2: reporter(pmst, Conn, field1, field2, field3, out);
 break;

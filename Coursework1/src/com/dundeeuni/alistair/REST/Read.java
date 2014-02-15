@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import com.dundeeuni.alistair.lib.*;
-import com.dundeeuni.alistair.pages.*;
 /**
 * Servlet implementation class Math
 */
