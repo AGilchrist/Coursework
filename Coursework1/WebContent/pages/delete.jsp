@@ -37,6 +37,12 @@ String myName = request.getParameter("myID");
         + request.getParameter("myID")+ "\">Submit</a>");  
 %>   
 <br><br>
-<input type=button value="Back to Home Page" onCLick="history.back(), history.back()">
+<script type="text/javascript">
+ function openPage(pageURL)
+ {
+ window.location.href = pageURL;
+ }
+</script>
+<input type=button value="Back to Home Page" onclick="openPage('http://localhost:8080/Coursework1/index.jsp')">
 </body>
 </html>

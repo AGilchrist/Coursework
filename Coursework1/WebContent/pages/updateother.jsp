@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Create an entry</title>
+<title>Update an entry</title>
 </head>
 <body>
-<h3>This is the interface for creating a new entry in the author, developer or administrator table</h3>
+<h3>This is the interface for updating entries in the author, developer or administrator table</h3>
 <p>Please select which table you want to make a new entry in and fill out the two text boxes before hitting the submit button, then the link</p>
 <form action="#" name="myTable" id="myTable">
 <select name="Tablechoice">
@@ -18,7 +18,11 @@
 </select>
 <br/>
 <br/>
-<form name="createother" method="post" action="createother.jsp">
+<form name="updateother" method="post" action="createother.jsp">
+ID of entry:
+<input type="text" name="myID" id="myID" value="">
+<br/>
+<br/>
 Name of new entry:
 <input type="text" name="myName" id="myName" value="">
 <br/>
@@ -32,13 +36,14 @@ Email address:
 </form>
 <%  
 String myTable = request.getParameter("Tablechoice");
+String myID = request.getParameter("myID");
 String myName = request.getParameter("myName");
 String myemail = request.getParameter("myemail");
 %>  
 <br>
 <b>Click the link below to send to servlet and create entry</b><br><br>
 <%out.println("<a href=\"http://localhost:8080/Coursework1/Create/" + request.getParameter("Tablechoice") + "/" 
-        + request.getParameter("myName") + "/" + request.getParameter("myemail") + "\">Submit</a>");  
+		 + request.getParameter("myID") + "/" + request.getParameter("myName") + "/" + request.getParameter("myemail") + "\">Submit</a>");  
 %>   
 <br><br>
 <script type="text/javascript">
@@ -47,6 +52,6 @@ String myemail = request.getParameter("myemail");
  window.location.href = pageURL;
  }
 </script>
-<input type="button" value="Back to Home Page" name="Back" onclick="openPage('http://localhost:8080/Coursework1/index.jsp')"/>
+<input type=button value="Back to Home Page" onclick="openPage('http://localhost:8080/Coursework1/index.jsp')">
 </body>
 </html>

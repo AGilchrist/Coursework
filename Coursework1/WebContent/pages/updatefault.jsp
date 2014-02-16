@@ -4,13 +4,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Create a fault</title>
+<title>Update an entry</title>
 </head>
-<body>
-<h3>This is the interface for creating a new entry in the fault table</h3>
+<body">
+<h3>This is the interface for updating existing entries in the fault table</h3>
 <p>Please type data for all fields of the entry before hitting the submit button, then the link</p>
 
-<form name="createfault" method="post" action="createfault.jsp">
+<form name="updatefault" method="post" action="updatefault.jsp">
+ID of fault to update:
+<input type="text" name="myID" id="myID" value="">
+<br/>
+<br/>
 Summary of fault:
 <input type="text" name="mySummary" id="mySummary" value="">
 <br/>
@@ -36,6 +40,7 @@ Severity of fault:
 <br/>
 </form>
 <%  
+String myID = request.getParameter("myID");
 String mySummary = request.getParameter("mySummary");
 String myDetails = request.getParameter("myDetails");
 String myReporter = request.getParameter("myReporter");
@@ -43,9 +48,9 @@ String mySection = request.getParameter("mySection");
 String mySeverity = request.getParameter("mySeverity");
 %>  
 <b>Click the link below to send to servlet and create entry</b><br><br>
-<%out.println("<a href=\"http://localhost:8080/Coursework1/Create/fault/" 
-        + request.getParameter("mySummary") + "/" + request.getParameter("myDetails") + "/" + request.getParameter("myReporter") + "/"
-        + request.getParameter("mySection") + "/" + request.getParameter("mySeverity") 
+<%out.println("<a href=\"http://localhost:8080/Coursework1/Update/fault/" 
+		+ request.getParameter("myID") + "/" + request.getParameter("mySummary") + "/" + request.getParameter("myDetails") + "/" 
+		+ request.getParameter("myReporter") + "/" + request.getParameter("mySection") + "/" + request.getParameter("mySeverity") 
         + "\">Create Entry</a>");  
 %>   
 <br>
@@ -54,6 +59,24 @@ String mySeverity = request.getParameter("mySeverity");
  function openPage(pageURL)
  {
  window.location.href = pageURL;
+ }
+
+ function Default(){
+     if(document.updatefault.mySummary.value==""){
+         document.updatefault.mySummary.value = null;
+     }
+     if(document.updatefault.myDetails.value==""){
+         document.updatefault.myDetails.value = null;
+     }
+     if(document.updatefault.myReporter.value==""){
+         document.updatefault.myReporter.value = null;
+     }
+     if(document.updatefault.mySection.value==""){
+         document.updatefault.mySection.value = null;
+     }
+     if(document.updatefault.mySeverity.value==""){
+         document.updatefault.mySeverity.value = null;
+     }
  }
 </script>
 <input type=button value="Back to Home Page" onclick="openPage('http://localhost:8080/Coursework1/index.jsp')">
