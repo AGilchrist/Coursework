@@ -64,7 +64,7 @@ _ds=db.assemble(config);
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 PreparedStatement pmst = null;
 Connection Conn;
-String field1;
+String ID;
 
 try {
 Conn = _ds.getConnection();
@@ -82,17 +82,17 @@ error("You cannot create entries for a table that doesn't exist",out);
 return;
 }
 if (args.length <4){
-	field1 = null;
+	ID = null;
 }else{
-	field1 = args[3];}
+	ID = args[3];}
 switch (command){
-case 1: fault(pmst, Conn, field1, out);
+case 1: fault(pmst, Conn, ID, out);
 break;
-case 2: reporter(pmst, Conn, field1, out);
+case 2: reporter(pmst, Conn, ID, out);
 break;
-case 3: developer(pmst, Conn, field1, out);
+case 3: developer(pmst, Conn, ID, out);
 break;
-case 4: administrator(pmst, Conn, field1, out);
+case 4: administrator(pmst, Conn, ID, out);
 break;
 default: error("No such table",out);
 }
@@ -115,12 +115,12 @@ private void print(ResultSet rs, PrintWriter out) throws SQLException{
     int numberofcolumns = meta.getColumnCount();
     while (rs.next()) {
         for (int i = 1; i <= numberofcolumns; i++) {
-            if (i > 1) out.print(",\t");
+            if (i > 1) out.print(",    ");
             String Value = rs.getString(i);
-            out.print(meta.getColumnName(i) + ":\t" + Value);
-            System.out.println(Value);
-        }
-        out.println("\t");
+            out.print(meta.getColumnName(i) + ": " + Value);
+            System.out.println(Value);  
+          }
+        System.out.println();
     }  
 out.close();
 return;
@@ -149,8 +149,8 @@ private void fault(PreparedStatement pmst, Connection Conn, String faultid, Prin
 	};
 }
 
-private void reporter(PreparedStatement pmst, Connection Conn, String name, PrintWriter out ) throws SQLException{
-	if(name == null){
+private void reporter(PreparedStatement pmst, Connection Conn, String authorid, PrintWriter out ) throws SQLException{
+	if(authorid == null){
 		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `reporter`");
 		try {
 			ResultSet rs = pstmt.executeQuery();
@@ -160,8 +160,8 @@ private void reporter(PreparedStatement pmst, Connection Conn, String name, Prin
 			return;	
 			}
 	}else{
-	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `reporter` WHERE name = ?");
-	pstmt.setString(1, name);
+	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `reporter` WHERE idauthor = ?");
+	pstmt.setString(1, authorid);
 	try {
 		ResultSet rs = pstmt.executeQuery();
 		print(rs,out);
@@ -172,8 +172,8 @@ private void reporter(PreparedStatement pmst, Connection Conn, String name, Prin
 	};
 }
 
-private void developer(PreparedStatement pmst, Connection Conn, String name, PrintWriter out ) throws SQLException{
-	if(name == null){
+private void developer(PreparedStatement pmst, Connection Conn, String developerid, PrintWriter out ) throws SQLException{
+	if(developerid == null){
 		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `developer`");
 		try {
 			ResultSet rs = pstmt.executeQuery();
@@ -183,8 +183,8 @@ private void developer(PreparedStatement pmst, Connection Conn, String name, Pri
 			return;	
 			}
 	}else{
-	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `developer` WHERE name = 'Harry'");
-	//pstmt.setString(1, name);
+	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `developer` WHERE iddeveloper = ?");
+	pstmt.setString(1, developerid);
 	try {
 		ResultSet rs = pstmt.executeQuery();
 		print(rs,out);
@@ -195,8 +195,8 @@ private void developer(PreparedStatement pmst, Connection Conn, String name, Pri
 	};
 }
 
-private void administrator(PreparedStatement pmst, Connection Conn, String name, PrintWriter out ) throws SQLException{
-	if(name == null){
+private void administrator(PreparedStatement pmst, Connection Conn, String administratorid, PrintWriter out ) throws SQLException{
+	if(administratorid == null){
 		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `administrator`");
 		try {
 			ResultSet rs = pstmt.executeQuery();
@@ -206,8 +206,8 @@ private void administrator(PreparedStatement pmst, Connection Conn, String name,
 			return;	
 			}
 	}else{
-	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `administrator` WHERE name = ?");
-	pstmt.setString(1, name);
+	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `administrator` WHERE idadministrator = ?");
+	pstmt.setString(1, administratorid);
 	try {
 		ResultSet rs = pstmt.executeQuery();
 		print(rs,out);

@@ -4,24 +4,27 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Delete entries</title>
+<title>Create an entry</title>
 </head>
 <body>
-<h3>This is the interface for deleting an entry from a table in the database</h3>
-<p>Please select which table you would like to delete from, type an id for a specific entry, then click the submit button and then the link</p>
+<h3>This is the interface for creating a new entry in the author, developer or administrator table</h3>
+<p>Please select which table you want to make a new entry in and fill out the two text boxes before hitting the submit button, then the link</p>
 <form action="#" name="myTable" id="myTable">
 <select name="Tablechoice">
 <option>      </option>
-<option value='fault'>Fault</option>
 <option value='reporter'>Author</option>
 <option value='developer'>Developer</option>
 <option value='administrator'>Administrator</option>
 </select>
 <br/>
 <br/>
-<form name="selectid" method="post" action="read.jsp">
+<form name="createother" method="post" action="createother.jsp">
 Name of new entry:
-<input type="text" name="myID" id="myID" value="">
+<input type="text" name="myName" id="myName" value="">
+<br/>
+<br/>
+Email address:
+<input type="text" name="myemail" id="myemail" value="">
 <br/>
 <br/>
 <input type="Submit" value="Click to Submit">
@@ -29,12 +32,13 @@ Name of new entry:
 </form>
 <%  
 String myTable = request.getParameter("Tablechoice");
-String myName = request.getParameter("myID");
-%>
+String myName = request.getParameter("myName");
+String myemail = request.getParameter("myemail");
+%>  
 <br>
 <b>Click the link below to send to servlet and create entry</b><br><br>
-<%out.println("<a href=\"http://localhost:8080/Coursework1/Delete/" + request.getParameter("Tablechoice") + "/" 
-        + request.getParameter("myID")+ "\">Submit</a>");  
+<%out.println("<a href=\"http://localhost:8080/Coursework1/Create/" + request.getParameter("Tablechoice") + "/" 
+        + request.getParameter("myName") + "/" + request.getParameter("myemail") + "\">Submit</a>");  
 %>   
 <br><br>
 <input type=button value="Back to Home Page" onCLick="history.back(), history.back()">

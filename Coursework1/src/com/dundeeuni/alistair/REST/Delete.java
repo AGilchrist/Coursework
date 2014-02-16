@@ -72,7 +72,7 @@ PrintWriter out=null;
 out =	new PrintWriter(response.getOutputStream());
 
 if (args.length <4){
-error("Warning too few args",out);
+error("You must provide an ID number for the entry you wish to delete",out);
 return;
 }
 int command;
@@ -126,7 +126,7 @@ private void fault(PreparedStatement pmst, Connection Conn, String id, PrintWrit
 }
 
 private void reporter(PreparedStatement pmst, Connection Conn, String id, PrintWriter out )throws SQLException{
-	PreparedStatement pstmt = Conn.prepareStatement("DELETE FROM `reporter` WHERE name = ?");
+	PreparedStatement pstmt = Conn.prepareStatement("DELETE FROM `author` WHERE idauthor = ?");
 	pstmt.setString(1, id);
 	try {
 		pstmt.executeUpdate();
@@ -137,7 +137,7 @@ private void reporter(PreparedStatement pmst, Connection Conn, String id, PrintW
 }
 
 private void developer(PreparedStatement pmst, Connection Conn, String id, PrintWriter out )throws SQLException{
-	PreparedStatement pstmt = Conn.prepareStatement("DELETE FROM `developer` WHERE name = ?");
+	PreparedStatement pstmt = Conn.prepareStatement("DELETE FROM `developer` WHERE idauthor = ?");
 	pstmt.setString(1, id);
 	try {
 		pstmt.executeUpdate();
@@ -148,7 +148,7 @@ private void developer(PreparedStatement pmst, Connection Conn, String id, Print
 }
 
 private void administrator(PreparedStatement pmst, Connection Conn, String id, PrintWriter out )throws SQLException{
-	PreparedStatement pstmt = Conn.prepareStatement("DELETE FROM `administrator` WHERE name = ?");
+	PreparedStatement pstmt = Conn.prepareStatement("DELETE FROM `administrator` WHERE idauthor = ?");
 	pstmt.setString(1, id);
 	try {
 		pstmt.executeUpdate();

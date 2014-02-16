@@ -4,10 +4,39 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Read entries</title>
 </head>
 <body>
-<p>This is the read page</p>
-<input type=button value="Back" onCLick="history.back()">
+<h3>This is the interface for reading entries in all tables in the database</h3>
+<p>Please select which table you would like to read from, type an id for a specific entry or leave blank to see all entries in the table, then click the submit button and then the link</p>
+<form action="#" name="myTable" id="myTable">
+<select name="Tablechoice">
+<option>      </option>
+<option value='fault'>Fault</option>
+<option value='reporter'>Author</option>
+<option value='developer'>Developer</option>
+<option value='administrator'>Administrator</option>
+</select>
+<br/>
+<br/>
+<form name="selectid" method="post" action="read.jsp">
+Name of new entry:
+<input type="text" name="myID" id="myID" value="">
+<br/>
+<br/>
+<input type="Submit" value="Click to Submit">
+</form>
+</form>
+<%  
+String myTable = request.getParameter("Tablechoice");
+String myName = request.getParameter("myID");
+%>
+<br>
+<b>Click the link below to send to servlet and create entry</b><br><br>
+<%out.println("<a href=\"http://localhost:8080/Coursework1/Read/" + request.getParameter("Tablechoice") + "/" 
+        + request.getParameter("myID")+ "\">Submit</a>");  
+%>   
+<br><br>
+<input type=button value="Back to Home Page" onCLick="history.back(), history.back()">
 </body>
 </html>

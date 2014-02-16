@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -61,12 +63,14 @@ _ds=db.assemble(config);
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 PreparedStatement pmst = null;
 Connection Conn;
-String field1;
-String field2;
-String field5;
-int field3;
-int field4;
-int field6;
+String faultSummary;
+String faultDetails;
+String faultReporter;
+String faultSection;
+String faultSeverity;
+int Reporterint;
+int Sectionint;
+int Severityint;
 
 try {
 Conn = _ds.getConnection();
@@ -89,30 +93,32 @@ return;
 }
 System.out.println("Command"+command);
 try{
-field1 = args[3];
-field2 = args[4];
-field3=Integer.parseInt(args[5]);
-field4=Integer.parseInt(args[6]);
-field5 = args[7];
-field6=Integer.parseInt(args[8]);
+faultSummary = args[3];
+faultDetails = args[4];
 }catch(Exception et){
 error("Bad numbers in calc",out);
 return;	
 }
 switch (command){
 case 1: {
-	if (args.length <9){
+	if (args.length <6){
 		error("Warning too few args for this command",out);
 		return;
 		}else{
-			fault(pmst, Conn, field1, field2, field3, field4, field5, field6, out);}
+			faultReporter = args[5];
+			faultSection = args[6];
+			faultSeverity = args[6];
+			Reporterint = Integer.parseInt(faultReporter);
+			Sectionint = Integer.parseInt(faultSection);
+			Severityint = Integer.parseInt(faultSection);
+			fault(pmst, Conn, faultSummary, faultDetails, Reporterint, Sectionint, Severityint, out);}
 		}
 break;
-case 2: reporter(pmst, Conn, field1, field2, out);
+case 2: reporter(pmst, Conn, faultSummary, faultDetails, out);
 break;
-case 3: developer(pmst, Conn, field1, field2, out);
+case 3: developer(pmst, Conn, faultSummary, faultDetails, out);
 break;
-case 4: administrator(pmst, Conn, field1, field2, out);
+case 4: administrator(pmst, Conn, faultSummary, faultDetails, out);
 break;
 default: error("No such table",out);
 }
@@ -124,30 +130,46 @@ return;
 }
 
 private void error(String mess, PrintWriter out){
-out.println("<h1>You have a an error in your input</h1>");
+out.println("<h1>You have an error in your input</h1>");
 out.println("<h2>"+mess+"</h2>");
 out.close();
 return;
 }
 
-private void fault(PreparedStatement pmst, Connection Conn, String summary, String details, int author, int section, String reporter, int severity, PrintWriter out ) throws SQLException{
-	PreparedStatement pstmt = Conn.prepareStatement("INSERT INTO `fault`(summary,details,author_idauthor, section_idsection, reporter_name,severity) VALUES (?, ?, ?, ?, ?, ?)");
+private void print(ResultSet rs, PrintWriter out) throws SQLException{
+	ResultSetMetaData meta = rs.getMetaData();
+    int numberofcolumns = meta.getColumnCount();
+    while (rs.next()) {
+        for (int i = 1; i <= numberofcolumns; i++) {
+            if (i > 1) out.print(",\t");
+            String Value = rs.getString(i);
+            out.print(meta.getColumnName(i) + ":\t" + Value);
+            System.out.println(Value);
+        }
+        out.println("\t");
+    }  
+out.close();
+return;
+}
+
+private void fault(PreparedStatement pmst, Connection Conn, String summary, String details, int author, int section, int severity, PrintWriter out ) throws SQLException{
+	PreparedStatement pstmt = Conn.prepareStatement("INSERT INTO `fault`(summary,details,author_idauthor, section_idsection, severity) VALUES (?, ?, ?, ?, ?)");
 	pstmt.setString(1, summary);
 	pstmt.setString(2, details);
 	pstmt.setInt(3, author);
 	pstmt.setInt(4, section);
-	pstmt.setString(5, reporter);
-	pstmt.setInt(6, severity);
+	pstmt.setInt(5, severity);
 	try {
 		pstmt.executeUpdate();
 		} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
 		return;	
 		}
+	out.print("Success");
 }
 
 private void reporter(PreparedStatement pmst, Connection Conn, String name, String email, PrintWriter out )throws SQLException{
-	PreparedStatement pstmt = Conn.prepareStatement("INSERT INTO `reporter`(name, email) VALUES (?, ?)");
+	PreparedStatement pstmt = Conn.prepareStatement("INSERT INTO `author`(name, email) VALUES (?, ?)");
 	pstmt.setString(1, name);
 	pstmt.setString(2, email);
 	try {
@@ -156,6 +178,7 @@ private void reporter(PreparedStatement pmst, Connection Conn, String name, Stri
 		System.out.println("Cannot do that "+ex);
 		return;	
 		}
+	out.print("Success");
 }
 
 private void developer(PreparedStatement pmst, Connection Conn, String name, String email, PrintWriter out )throws SQLException{
@@ -168,6 +191,7 @@ private void developer(PreparedStatement pmst, Connection Conn, String name, Str
 		System.out.println("Cannot do that "+ex);
 		return;	
 		}
+	out.print("Success");
 }
 
 private void administrator(PreparedStatement pmst, Connection Conn, String name, String email, PrintWriter out )throws SQLException{
@@ -180,6 +204,7 @@ private void administrator(PreparedStatement pmst, Connection Conn, String name,
 		System.out.println("Cannot do that "+ex);
 		return;	
 		}
+	out.print("Success");
 }
 
 /**

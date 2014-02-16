@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Start Page</title>
+<title>Home Page</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -20,7 +20,7 @@ $('#slectboxid option').click(function(){
 <form action="#">
 <select name="URL" onchange="window.location.href= this.form.URL.options[this.form.URL.selectedIndex].value">
 <option>      </option>
-<option value="http://localhost:8080/Coursework1/pages/create.jsp">Create</option>
+<option value="http://localhost:8080/Coursework1/pages/createmenu.jsp">Create</option>
 <option value="http://localhost:8080/Coursework1/pages/read.jsp">Read</option>
 <option value="http://localhost:8080/Coursework1/pages/update.jsp">Update</option>
 <option value="http://localhost:8080/Coursework1/pages/delete.jsp">Delete</option>
