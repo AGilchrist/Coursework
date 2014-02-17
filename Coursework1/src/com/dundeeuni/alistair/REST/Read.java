@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -97,10 +98,16 @@ break;
 default: error("No such table",out);
 }
 Conn.close();
+try {
+	TimeUnit.SECONDS.sleep(10);
+} catch (InterruptedException et) {
+	out.print("The timer has failed");
+}
 }
 catch (Exception et) {
 return;
 }
+response.sendRedirect("http://localhost:8080/Coursework1/index.jsp");
 }
 
 private void error(String mess, PrintWriter out){
@@ -118,9 +125,7 @@ private void print(ResultSet rs, PrintWriter out) throws SQLException{
             if (i > 1) out.print(",    ");
             String Value = rs.getString(i);
             out.print(meta.getColumnName(i) + ": " + Value);
-            System.out.println(Value);  
           }
-        System.out.println();
     }  
 out.close();
 return;

@@ -91,12 +91,9 @@ System.out.println("Command"+command);
 try{
 field1 = args[3];
 field2 = args[4];
-	if(field2.equals(" ")){field2 = null;}
+	if(field2.equals("null")){field2 = null;}
 field3 = args[5];
-	if(field3.equals(" ")){field1 = null;}
-field4 = args[6];
-field5 = args[7];
-field6 = args[8];
+	if(field3.equals("null")){field3 = null;}
 }catch(Exception et){
 error("Bad numbers in calc",out);
 return;	
@@ -107,6 +104,12 @@ case 1: {
 		error("Warning too few args for this command",out);
 		return;
 		}else{
+			field4 = args[6];
+				if(field4.equals("null")){field4 = null;}
+			field5 = args[7];
+				if(field5.equals("null")){field5 = null;}
+			field6 = args[8];
+				if(field6.equals("null")){field6 = null;}
 			fault(pmst, Conn, field1, field2, field3, field4, field5, field6, out);}
 		}
 break;
@@ -123,6 +126,7 @@ Conn.close();
 catch (Exception et) {
 return;
 }
+response.sendRedirect("http://localhost:8080/Coursework1/index.jsp");
 }
 
 private void error(String mess, PrintWriter out){
@@ -134,7 +138,6 @@ return;
 
 private void fault(PreparedStatement pmst, Connection Conn, String oldid, String summary, String details, String author, String section, String severity, PrintWriter out ) throws SQLException{
 	int id = Integer.parseInt(oldid);
-	int authorint = Integer.parseInt(author);
 	if(summary != null){
 		try{
 	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `fault` SET summary = ? WHERE idfault = ?");
@@ -156,9 +159,10 @@ private void fault(PreparedStatement pmst, Connection Conn, String oldid, String
 		} }
 	
 	if(author != null){
+		int aint = Integer.parseInt(author);
 		try{
 	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `fault` SET author_idauthor = ? WHERE idfault = ?");
-	pstmt.setInt(1, authorint);
+	pstmt.setInt(1, aint);
 	pstmt.setInt(2, id);
 	pstmt.executeUpdate();} catch (Exception ex) {
 		System.out.println("Cannot do that author "+ex);
@@ -188,43 +192,73 @@ private void fault(PreparedStatement pmst, Connection Conn, String oldid, String
 		} }
 }
 
-private void reporter(PreparedStatement pmst, Connection Conn, String oldname, String name, String email, PrintWriter out )throws SQLException{
-	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `reporter` SET name = ? " + ", email = ? " + " WHERE name = ?");
+private void reporter(PreparedStatement pmst, Connection Conn, String oldid, String name, String email, PrintWriter out )throws SQLException{
+	int id = Integer.parseInt(oldid);
+	if(name != null){
+		try{
+	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `author` SET name = ? WHERE idauthor = ?");
 	pstmt.setString(1, name);
-	pstmt.setString(2, email);
-	pstmt.setString(3, oldname);
-	try {
-		pstmt.executeUpdate();
-		} catch (Exception ex) {
-		System.out.println("Cannot do that "+ex);
+	pstmt.setInt(2, id);
+	pstmt.executeUpdate();} catch (Exception ex) {
+		System.out.println("Cannot do that name "+ex);
 		return;	
-		}
+		} }
+	
+	if(email != null){
+		try{
+	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `author` SET email = ? WHERE idauthor = ?");
+	pstmt.setString(1, email);
+	pstmt.setInt(2, id);
+	pstmt.executeUpdate();} catch (Exception ex) {
+		System.out.println("Cannot do that email "+ex);
+		return;	
+		} }
 }
 
-private void developer(PreparedStatement pmst, Connection Conn, String oldname, String name, String email, PrintWriter out )throws SQLException{
-	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `reporter` SET(name, email) = (?, ?) WHERE name = ?");
+private void developer(PreparedStatement pmst, Connection Conn, String oldid, String name, String email, PrintWriter out )throws SQLException{
+	int id = Integer.parseInt(oldid);
+	if(name != null){
+		try{
+	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `developer` SET name = ? WHERE iddeveloper = ?");
 	pstmt.setString(1, name);
-	pstmt.setString(2, email);
-	pstmt.setString(3, oldname);
-	try {
-		pstmt.executeUpdate();
-		} catch (Exception ex) {
-		System.out.println("Cannot do that "+ex);
+	pstmt.setInt(2, id);
+	pstmt.executeUpdate();} catch (Exception ex) {
+		System.out.println("Cannot do that name "+ex);
 		return;	
-		}
+		} }
+	
+	if(email != null){
+		try{
+	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `developer` SET email = ? WHERE iddeveloper = ?");
+	pstmt.setString(1, email);
+	pstmt.setInt(2, id);
+	pstmt.executeUpdate();} catch (Exception ex) {
+		System.out.println("Cannot do that email "+ex);
+		return;	
+		} }
 }
 
-private void administrator(PreparedStatement pmst, Connection Conn, String oldname, String name, String email, PrintWriter out )throws SQLException{
-	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `reporter` SET(name, email) = (?, ?) WHERE name = ?");
+private void administrator(PreparedStatement pmst, Connection Conn, String oldid, String name, String email, PrintWriter out )throws SQLException{
+	int id = Integer.parseInt(oldid);
+	if(name != null){
+		try{
+	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `administrator` SET name = ? WHERE idadministrator = ?");
 	pstmt.setString(1, name);
-	pstmt.setString(2, email);
-	pstmt.setString(3, oldname);
-	try {
-		pstmt.executeUpdate();
-		} catch (Exception ex) {
-		System.out.println("Cannot do that "+ex);
+	pstmt.setInt(2, id);
+	pstmt.executeUpdate();} catch (Exception ex) {
+		System.out.println("Cannot do that name "+ex);
 		return;	
-		}
+		} }
+	
+	if(email != null){
+		try{
+	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `administrator` SET email = ? WHERE idadministrator = ?");
+	pstmt.setString(1, email);
+	pstmt.setInt(2, id);
+	pstmt.executeUpdate();} catch (Exception ex) {
+		System.out.println("Cannot do that email "+ex);
+		return;	
+		} }
 }
 
 /**

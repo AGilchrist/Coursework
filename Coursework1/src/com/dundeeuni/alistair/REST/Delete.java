@@ -105,6 +105,7 @@ Conn.close();
 catch (Exception et) {
 return;
 }
+response.sendRedirect("http://localhost:8080/Coursework1/index.jsp");
 }
 
 private void error(String mess, PrintWriter out){

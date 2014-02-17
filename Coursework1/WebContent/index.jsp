@@ -14,7 +14,7 @@
 <option>      </option>
 <option value="http://localhost:8080/Coursework1/pages/createmenu.jsp">Create</option>
 <option value="http://localhost:8080/Coursework1/pages/read.jsp">Read</option>
-<option value="http://localhost:8080/Coursework1/pages/update.jsp">Update</option>
+<option value="http://localhost:8080/Coursework1/pages/updatemenu.jsp">Update</option>
 <option value="http://localhost:8080/Coursework1/pages/delete.jsp">Delete</option>
 </select>
 <p></p>

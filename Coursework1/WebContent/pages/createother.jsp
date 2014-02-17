@@ -14,7 +14,7 @@
 <option>      </option>
 <option value='reporter'>Author</option>
 <option value='developer'>Developer</option>
-<option value='administrator'>Administrator</option>
+<option value='admin'>Administrator</option>
 </select>
 <br/>
 <br/>

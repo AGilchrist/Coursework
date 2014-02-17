@@ -6,9 +6,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Update an entry</title>
 </head>
-<body">
+<body onLoad="Default()">
 <h3>This is the interface for updating existing entries in the fault table</h3>
-<p>Please type data for all fields of the entry before hitting the submit button, then the link</p>
+<p>Please type data for all fields you wish to update or leave as null to not alter the field,
+before hitting the submit button, then the link to goto the servlet and carry out the update</p>
 
 <form name="updatefault" method="post" action="updatefault.jsp">
 ID of fault to update:
@@ -56,7 +57,8 @@ String mySeverity = request.getParameter("mySeverity");
 <br>
 <br>
 <script type="text/javascript">
- function openPage(pageURL)
+
+function openPage(pageURL)
  {
  window.location.href = pageURL;
  }
