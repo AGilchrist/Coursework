@@ -49,10 +49,8 @@ out.println("<a href=\"http://localhost:8080/Coursework1/Read/" + request.getPar
 <input type="button" value="Log Out" name="Logout" onclick="openPage('http://localhost:8080/Coursework1/Logout.jsp')"/><%}
 
 else{
-	out.println("Please Log in to access features <br />");%>
-	<br>
-
-    <input type="button" value="Log In" name="Login" onclick="openPage('http://localhost:8080/Coursework1/Login.jsp')"/><%}
+	String redirectURL = "http://localhost:8080/Coursework1/index.jsp";
+    response.sendRedirect(redirectURL);}
 %>
 <script type="text/javascript">
  function openPage(pageURL)
