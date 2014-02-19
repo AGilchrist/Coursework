@@ -137,22 +137,6 @@ out.close();
 return;
 }
 
-private void print(ResultSet rs, PrintWriter out) throws SQLException{
-	ResultSetMetaData meta = rs.getMetaData();
-    int numberofcolumns = meta.getColumnCount();
-    while (rs.next()) {
-        for (int i = 1; i <= numberofcolumns; i++) {
-            if (i > 1) out.print(",\t");
-            String Value = rs.getString(i);
-            out.print(meta.getColumnName(i) + ":\t" + Value);
-            System.out.println(Value);
-        }
-        out.println("\t");
-    }  
-out.close();
-return;
-}
-
 private void fault(PreparedStatement pmst, Connection Conn, String summary, String details, int author, int section, int severity, PrintWriter out ) throws SQLException{
 	PreparedStatement pstmt = Conn.prepareStatement("INSERT INTO `fault`(summary,details,author_idauthor, section_idsection, severity) VALUES (?, ?, ?, ?, ?)");
 	pstmt.setString(1, summary);

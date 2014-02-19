@@ -3,10 +3,15 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<jsp:useBean id="Log" class="com.dundeeuni.alistair.Beans.LogUser" scope="session" />
+<jsp:setProperty name="Log" property="*" /> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Update an entry</title>
 </head>
 <body onLoad="Default()">
+<%
+if(Log.isLoggedIn()){
+    out.println("Hello user " + Log.getUsername() + " <br />");%>
 <h3>This is the interface for updating existing entries in the fault table</h3>
 <p>Please type data for all fields you wish to update or leave as null to not alter the field,
 before hitting the submit button, then the link to goto the servlet and carry out the update</p>
@@ -47,15 +52,27 @@ String myDetails = request.getParameter("myDetails");
 String myReporter = request.getParameter("myReporter");
 String mySection = request.getParameter("mySection");
 String mySeverity = request.getParameter("mySeverity");
-%>  
-<b>Click the link below to send to servlet and create entry</b><br><br>
-<%out.println("<a href=\"http://localhost:8080/Coursework1/Update/fault/" 
+out.println("Please click the link below to Update the selected entry or entries <br><br>");
+if(myID != null){
+out.println("<a href=\"http://localhost:8080/Coursework1/Update/fault/" 
 		+ request.getParameter("myID") + "/" + request.getParameter("mySummary") + "/" + request.getParameter("myDetails") + "/" 
 		+ request.getParameter("myReporter") + "/" + request.getParameter("mySection") + "/" + request.getParameter("mySeverity") 
         + "\">Create Entry</a>");  
+}else{out.println("You must provide a id number for the entry you wish to update <br> Make sure it is valid or nothing will happen on the database");}
 %>   
 <br>
 <br>
+<input type=button value="Back to Home Page" onclick="openPage('http://localhost:8080/Coursework1/index.jsp')">
+<br>
+<br>
+<input type="button" value="Log Out" name="Logout" onclick="openPage('http://localhost:8080/Coursework1/Logout.jsp')"/><%}
+
+else{
+	out.println("Please Log in to access features <br />");%>
+	<br>
+
+    <input type="button" value="Log In" name="Login" onclick="openPage('http://localhost:8080/Coursework1/Login.jsp')"/><%}
+%>
 <script type="text/javascript">
 
 function openPage(pageURL)
@@ -81,6 +98,5 @@ function openPage(pageURL)
      }
  }
 </script>
-<input type=button value="Back to Home Page" onclick="openPage('http://localhost:8080/Coursework1/index.jsp')">
 </body>
 </html>
