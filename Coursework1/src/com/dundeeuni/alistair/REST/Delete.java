@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import com.dundeeuni.alistair.lib.*;
+import com.dundeeuni.alistair.models.SQLDatabase;
+
 /**
 * Servlet implementation class Math
 */
@@ -59,9 +61,17 @@ _ds=db.assemble(config);
 }
     
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-PreparedStatement pmst = null;
 Connection Conn;
-String field1;
+PreparedStatement pstmt = null;
+SQLDatabase SQL = new SQLDatabase();
+
+String Action = "Delete";
+String ID;
+String field1 = null;
+String field2 = null;
+String Reporter = null;
+String Section = null;
+String Severity = null;
 
 try {
 Conn = _ds.getConnection();
@@ -84,19 +94,19 @@ return;
 }
 System.out.println("Command"+command);
 try{
-field1 = args[3];
+ID = args[3];
 }catch(Exception et){
 error("Bad numbers in calc",out);
 return;	
 }
 switch (command){
-case 1: fault(pmst, Conn, field1, out);
+case 1: SQL.fault(pstmt, Conn, Action, ID, field1, field2, Reporter, Section, Severity, out);
 break;
-case 2: reporter(pmst, Conn, field1, out);
+case 2: SQL.reporter(pstmt, Conn, Action, ID, field1, field2, out);
 break;
-case 3: developer(pmst, Conn, field1, out);
+case 3: SQL.developer(pstmt, Conn, Action, ID, field1, field2, out);
 break;
-case 4: administrator(pmst, Conn, field1, out);
+case 4: SQL.administrator(pstmt, Conn, Action, ID, field1, field2, out);
 break;
 default: error("No such table",out);
 }
@@ -115,49 +125,6 @@ out.close();
 return;
 }
 
-private void fault(PreparedStatement pmst, Connection Conn, String id, PrintWriter out ) throws SQLException{
-	PreparedStatement pstmt = Conn.prepareStatement("DELETE FROM `fault` WHERE idfault = ?");
-	pstmt.setString(1, id);
-	try {
-		pstmt.executeUpdate();
-		} catch (Exception ex) {
-		System.out.println("Cannot do that "+ex);
-		return;	
-		}
-}
-
-private void reporter(PreparedStatement pmst, Connection Conn, String id, PrintWriter out )throws SQLException{
-	PreparedStatement pstmt = Conn.prepareStatement("DELETE FROM `author` WHERE idauthor = ?");
-	pstmt.setString(1, id);
-	try {
-		pstmt.executeUpdate();
-		} catch (Exception ex) {
-		System.out.println("Cannot do that "+ex);
-		return;	
-		}
-}
-
-private void developer(PreparedStatement pmst, Connection Conn, String id, PrintWriter out )throws SQLException{
-	PreparedStatement pstmt = Conn.prepareStatement("DELETE FROM `developer` WHERE idauthor = ?");
-	pstmt.setString(1, id);
-	try {
-		pstmt.executeUpdate();
-		} catch (Exception ex) {
-		System.out.println("Cannot do that "+ex);
-		return;	
-		}
-}
-
-private void administrator(PreparedStatement pmst, Connection Conn, String id, PrintWriter out )throws SQLException{
-	PreparedStatement pstmt = Conn.prepareStatement("DELETE FROM `administrator` WHERE idauthor = ?");
-	pstmt.setString(1, id);
-	try {
-		pstmt.executeUpdate();
-		} catch (Exception ex) {
-		System.out.println("Cannot do that "+ex);
-		return;	
-		}
-}
 
 /**
 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

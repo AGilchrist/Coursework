@@ -23,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import com.dundeeuni.alistair.lib.*;
+import com.dundeeuni.alistair.models.SQLDatabase;
+
 /**
 * Servlet implementation class Math
 */
@@ -65,7 +67,16 @@ _ds=db.assemble(config);
 protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 PreparedStatement pmst = null;
 Connection Conn;
+PreparedStatement pstmt = null;
+SQLDatabase SQL = new SQLDatabase();
+
+String Action = "Read";
 String ID;
+String field1 = null;
+String field2 = null;
+String faultReporter = null;
+String faultSection = null;
+String faultSeverity = null;
 
 try {
 Conn = _ds.getConnection();
@@ -87,13 +98,13 @@ if (args.length <4){
 }else{
 	ID = args[3];}
 switch (command){
-case 1: fault(pmst, Conn, ID, out);
+case 1: SQL.fault(pmst, Conn, Action, ID, field1, field2, faultReporter, faultSection, faultSeverity, out);
 break;
-case 2: reporter(pmst, Conn, ID, out);
+case 2: SQL.reporter(pmst, Conn, Action, ID, field1, field2, out);
 break;
-case 3: developer(pmst, Conn, ID, out);
+case 3: SQL.developer(pmst, Conn, Action, ID, field1, field2, out);
 break;
-case 4: administrator(pmst, Conn, ID, out);
+case 4: SQL.administrator(pmst, Conn, Action, ID, field1, field2, out);
 break;
 default: error("No such table",out);
 }
@@ -115,112 +126,6 @@ out.println("<h1>You have a an error in your input</h1>");
 out.println("<h2>"+mess+"</h2>");
 out.close();
 return;
-}
-
-private void print(ResultSet rs, PrintWriter out) throws SQLException{
-	ResultSetMetaData meta = rs.getMetaData();
-    int numberofcolumns = meta.getColumnCount();
-    while (rs.next()) {
-        for (int i = 1; i <= numberofcolumns; i++) {
-            if (i > 1) out.print(",    ");
-            String Value = rs.getString(i);
-            out.print(meta.getColumnName(i) + ": " + Value);
-          }
-    }  
-out.close();
-return;
-}
-
-private void fault(PreparedStatement pmst, Connection Conn, String faultid, PrintWriter out ) throws SQLException{
-	if(faultid == null){
-		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault`");
-		try {
-			ResultSet rs = pstmt.executeQuery();
-			print(rs,out);
-			} catch (Exception ex) {
-			System.out.println("Cannot do that "+ex);
-			return;	
-			}
-	}else{
-	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault` WHERE idfault = ?");
-	pstmt.setString(1, faultid);
-	try {
-		ResultSet rs = pstmt.executeQuery();
-		print(rs,out);
-		} catch (Exception ex) {
-		System.out.println("Cannot do that "+ex);
-		return;	
-		}
-	};
-}
-
-private void reporter(PreparedStatement pmst, Connection Conn, String authorid, PrintWriter out ) throws SQLException{
-	if(authorid == null){
-		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `reporter`");
-		try {
-			ResultSet rs = pstmt.executeQuery();
-			print(rs,out);
-			} catch (Exception ex) {
-			System.out.println("Cannot do that "+ex);
-			return;	
-			}
-	}else{
-	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `reporter` WHERE idauthor = ?");
-	pstmt.setString(1, authorid);
-	try {
-		ResultSet rs = pstmt.executeQuery();
-		print(rs,out);
-		} catch (Exception ex) {
-		System.out.println("Cannot do that "+ex);
-		return;	
-		}
-	};
-}
-
-private void developer(PreparedStatement pmst, Connection Conn, String developerid, PrintWriter out ) throws SQLException{
-	if(developerid == null){
-		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `developer`");
-		try {
-			ResultSet rs = pstmt.executeQuery();
-			print(rs,out);
-			} catch (Exception ex) {
-			System.out.println("Cannot do that "+ex);
-			return;	
-			}
-	}else{
-	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `developer` WHERE iddeveloper = ?");
-	pstmt.setString(1, developerid);
-	try {
-		ResultSet rs = pstmt.executeQuery();
-		print(rs,out);
-		} catch (Exception ex) {
-		System.out.println("Cannot do that "+ex);
-		return;	
-		}
-	};
-}
-
-private void administrator(PreparedStatement pmst, Connection Conn, String administratorid, PrintWriter out ) throws SQLException{
-	if(administratorid == null){
-		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `administrator`");
-		try {
-			ResultSet rs = pstmt.executeQuery();
-			print(rs,out);
-			} catch (Exception ex) {
-			System.out.println("Cannot do that "+ex);
-			return;	
-			}
-	}else{
-	PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `administrator` WHERE idadministrator = ?");
-	pstmt.setString(1, administratorid);
-	try {
-		ResultSet rs = pstmt.executeQuery();
-		print(rs,out);
-		} catch (Exception ex) {
-		System.out.println("Cannot do that "+ex);
-		return;	
-		}
-	};
 }
 
 /**
