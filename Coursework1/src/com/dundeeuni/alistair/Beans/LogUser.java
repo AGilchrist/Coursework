@@ -3,6 +3,7 @@ package com.dundeeuni.alistair.Beans;
 public class LogUser {
     String username = "Alistair";
     String password = "Admin01";
+    String permlevel = "Admin";
    
     boolean loggedIn = false;
    
@@ -32,9 +33,19 @@ public class LogUser {
       return password;
     }
   
-   public void setPassword(String p)
+   public void setPassword(String password)
    {
-     password = p;
+     password = password;
+   }
+   
+   public String getPerm()
+   {
+     return permlevel;
+   }
+   
+   public void setPerm(String level)
+   {
+     permlevel = level;
    }
    
    public void LogIn(String Username, String Password)
