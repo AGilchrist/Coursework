@@ -27,7 +27,7 @@ import com.dundeeuni.alistair.models.SQLDatabase;
 */
 @WebServlet(
 urlPatterns = {
-"/Delete/*"
+"/Create/*"
 },
 initParams = {
 @WebInitParam(name = "data-source", value = "jdbc/Faultdb")
@@ -65,13 +65,12 @@ Connection Conn;
 PreparedStatement pstmt = null;
 SQLDatabase SQL = new SQLDatabase();
 
-String Action = "Create";
 String ID = null;
 String field1 = null;
 String field2 = null;
-String Reporter = null;
-String Section = null;
-String Severity = null;
+int Reporter;
+int Section;
+int Severity;
 
 try {
 Conn = _ds.getConnection();
@@ -81,7 +80,7 @@ response.setContentType("text/html");
 PrintWriter out=null;
 out =	new PrintWriter(response.getOutputStream());
 
-if (args.length <8){
+if (args.length <5){
 error("Too few arguments",out);
 return;
 }
@@ -101,17 +100,20 @@ error("Bad numbers in calc",out);
 return;	
 }
 switch (command){
-case 1: {
-	Reporter = args[5];
-	Section = args[6];
-	Severity = args[7];
-	SQL.fault(pstmt, Conn, Action, ID, field1, field2, Reporter, Section, Severity, out);}
+case 1:	{
+	if (args.length <5){
+		error("Too few arguments",out);
+		return;}
+	Reporter = Integer.parseInt(args[5]);
+	Section = Integer.parseInt(args[6]);
+	Severity = Integer.parseInt(args[7]);
+	SQL.createfault(pstmt, Conn, field1, field2, Reporter, Section, Severity, out);}
 break;
-case 2: SQL.reporter(pstmt, Conn, Action, ID, field1, field2, out);
+case 2: SQL.createreporter(pstmt, Conn, field1, field2, out);
 break;
-case 3: SQL.developer(pstmt, Conn, Action, ID, field1, field2, out);
+case 3: SQL.createdeveloper(pstmt, Conn, field1, field2, out);
 break;
-case 4: SQL.administrator(pstmt, Conn, Action, ID, field1, field2, out);
+case 4: SQL.createadministrator(pstmt, Conn, field1, field2, out);
 break;
 default: error("No such table",out);
 }

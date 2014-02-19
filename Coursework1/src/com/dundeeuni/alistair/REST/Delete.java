@@ -65,13 +65,7 @@ Connection Conn;
 PreparedStatement pstmt = null;
 SQLDatabase SQL = new SQLDatabase();
 
-String Action = "Delete";
 String ID;
-String field1 = null;
-String field2 = null;
-String Reporter = null;
-String Section = null;
-String Severity = null;
 
 try {
 Conn = _ds.getConnection();
@@ -100,13 +94,14 @@ error("Bad numbers in calc",out);
 return;	
 }
 switch (command){
-case 1: SQL.fault(pstmt, Conn, Action, ID, field1, field2, Reporter, Section, Severity, out);
+case 1: SQL.deletefault(pstmt, Conn, ID, out);
 break;
-case 2: SQL.reporter(pstmt, Conn, Action, ID, field1, field2, out);
+case 2: {
+	SQL.deletereporter(pstmt, Conn, ID, out);}
 break;
-case 3: SQL.developer(pstmt, Conn, Action, ID, field1, field2, out);
+case 3: SQL.deletedeveloper(pstmt, Conn, ID, out);
 break;
-case 4: SQL.administrator(pstmt, Conn, Action, ID, field1, field2, out);
+case 4: SQL.deleteadministrator(pstmt, Conn, ID, out);
 break;
 default: error("No such table",out);
 }

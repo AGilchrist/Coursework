@@ -66,7 +66,6 @@ Connection Conn;
 PreparedStatement pstmt = null;
 SQLDatabase SQL = new SQLDatabase();
 
-String Action = "Update";
 String ID;
 String field1;
 String field2;
@@ -111,19 +110,19 @@ case 1: {
 		return;
 		}else{
 			Reporter = args[6];
-				if(Reporter.equals("null")){Reporter = null;}
+			if(Reporter.equals("null")){Reporter = null;}
 			Section = args[7];
-				if(Section.equals("null")){Section = null;}
+			if(Section.equals("null")){Section = null;}
 			Severity = args[8];
-				if(Severity.equals("null")){Severity = null;}
-			SQL.fault(pmst, Conn, Action, ID, field1, field2, Reporter, Section, Severity, out);}
+			if(Severity.equals("null")){Severity = null;}
+			SQL.updatefault(pmst, Conn, ID, field1, field2, Reporter, Section, Severity, out);}
 		}
 break;
-case 2: SQL.reporter(pmst, Conn, Action, ID, field1, field2, out);
+case 2: SQL.updatereporter(pmst, Conn, ID, field1, field2, out);
 break;
-case 3: SQL.developer(pmst, Conn, Action, ID, field1, field2, out);
+case 3: SQL.updatedeveloper(pmst, Conn, ID, field1, field2, out);
 break;
-case 4: SQL.administrator(pmst, Conn, Action, ID, field1, field2, out);
+case 4: SQL.updateadministrator(pmst, Conn, ID, field1, field2, out);
 break;
 default: error("No such table",out);
 }

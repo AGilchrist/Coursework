@@ -70,13 +70,7 @@ Connection Conn;
 PreparedStatement pstmt = null;
 SQLDatabase SQL = new SQLDatabase();
 
-String Action = "Read";
 String ID;
-String field1 = null;
-String field2 = null;
-String faultReporter = null;
-String faultSection = null;
-String faultSeverity = null;
 
 try {
 Conn = _ds.getConnection();
@@ -98,13 +92,13 @@ if (args.length <4){
 }else{
 	ID = args[3];}
 switch (command){
-case 1: SQL.fault(pmst, Conn, Action, ID, field1, field2, faultReporter, faultSection, faultSeverity, out);
+case 1: SQL.readfault(pmst, Conn, ID, out);
 break;
-case 2: SQL.reporter(pmst, Conn, Action, ID, field1, field2, out);
+case 2: SQL.readreporter(pmst, Conn, ID, out);
 break;
-case 3: SQL.developer(pmst, Conn, Action, ID, field1, field2, out);
+case 3: SQL.readdeveloper(pmst, Conn, ID, out);
 break;
-case 4: SQL.administrator(pmst, Conn, Action, ID, field1, field2, out);
+case 4: SQL.readadministrator(pmst, Conn, ID, out);
 break;
 default: error("No such table",out);
 }
