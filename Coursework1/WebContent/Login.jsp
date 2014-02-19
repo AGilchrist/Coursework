@@ -26,7 +26,7 @@ Password:
 <%
 String myUsername = request.getParameter("myUsername");
 String myPassword = request.getParameter("myPassword");
-Log.LogIn(myUsername);
+Log.LogIn(myUsername, myPassword);
 if(Log.isLoggedIn())
 out.println("Welcome user " + myUsername + " You are now logged in <br/>");
 
