@@ -5,6 +5,8 @@
 <head>
 <jsp:useBean id="Log" class="com.dundeeuni.alistair.Beans.LogUser" scope="session" />
 <jsp:setProperty name="Log" property="*" /> 
+<jsp:useBean id="Data" class="com.dundeeuni.alistair.Beans.Data" scope="session" />
+<jsp:setProperty name="Data" property="*" /> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Home Page</title>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
@@ -23,6 +25,13 @@ if(Log.isLoggedIn()){
 </select>
 <br><br>
 </form>
+<%
+if(!Data.getDatabase()){
+%>
+<input type="button" value="Create Database Tables" name="Createdatabase" onclick="createdatabase('http://localhost:8080/Coursework1/Fault')"/>
+<%
+Data.setDatabase(true);} %>
+<br><br>
 <input type="button" value="Log Out" name="Logout" onclick="openPage('http://localhost:8080/Coursework1/Logout.jsp')"/><%}
 
 else{
@@ -35,6 +44,11 @@ else{
  function openPage(pageURL)
  {
  window.location.href = pageURL;
+ }
+ 
+ function createdatabase(pageURL)
+ {
+	 window.location.href = pageURL;
  }
  </script>
 

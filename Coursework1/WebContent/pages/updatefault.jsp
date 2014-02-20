@@ -57,7 +57,7 @@ Data.setSeverity(request.getParameter("mySeverity"));
 out.println("Please click the link below to Update the selected entry or entries <br><br>");
 if(request.getParameter("myID") != null){
 	Data.setID(request.getParameter("myID"));
-	out.println("<a href=\"http://localhost:8080/Coursework1/Update/fault/" + "\">Create Entry</a>");  
+	out.println("<a href=\"http://localhost:8080/Coursework1/Update/fault/" + "\">Update Entry</a>");  
 }else{out.println("You must provide a id number for the entry you wish to update <br> Make sure it is valid or nothing will happen on the database");}
 %>   
 <br>

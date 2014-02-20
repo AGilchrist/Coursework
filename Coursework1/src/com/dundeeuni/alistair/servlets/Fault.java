@@ -66,9 +66,8 @@ LinkedList<FaultsStore> psl = Faults.getFaults(); // Get a list of all faults
 
 /* If we want to forward to a jsp page do this */
 request.setAttribute("Faults", psl); //Set a bean with the list in it
-RequestDispatcher rd = request.getRequestDispatcher("/Renderfaults.jsp");
 
-rd.forward(request, response);
+response.sendRedirect("http://localhost:8080/Coursework1/index.jsp");
 }
 
 /**

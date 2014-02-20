@@ -39,8 +39,7 @@ Name of new entry:
 Data.setID(request.getParameter("myID"));
 out.println("Please click the link below to delete the selected entry <br><br>");
 if(request.getParameter("myID") != null){
-out.println("<a href=\"http://localhost:8080/Coursework1/Delete/" + request.getParameter("Tablechoice") + "/" 
-        + "\">Submit</a>");
+out.println("<a href=\"http://localhost:8080/Coursework1/Delete/" + request.getParameter("Tablechoice") + "/" + "\">Delete entry</a>");
 }else{out.println("You must provide a id number for the entry you wish to delete <br>");}
 %>   
 <br>

@@ -2,6 +2,7 @@ package com.dundeeuni.alistair.Beans;
 
 public class Data {
 	static private String ID, Summary, Details, Name, Email, Reporter, Section, Severity;
+	boolean database = false;
 	
 	public Data(){
 		
@@ -39,6 +40,9 @@ public class Data {
 		Email = email;
 	}
 	
+	public void setDatabase(Boolean state){
+		database = state;
+	}
 	
 	
 	public String getID(){
@@ -71,6 +75,10 @@ public class Data {
 	
 	public String getEmail(){
 		return Email;
+	}
+	
+	public Boolean getDatabase(){
+		return database;
 	}
 	
 	public void Reset(){
