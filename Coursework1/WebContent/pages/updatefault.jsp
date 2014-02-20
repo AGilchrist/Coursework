@@ -15,8 +15,8 @@
 if(Log.isLoggedIn()){
     out.println("Hello user " + Log.getUsername() + " <br />");%>
 <h3>This is the interface for updating existing entries in the fault table</h3>
-<p>Please type data for all fields you wish to update or leave as null to not alter the field,
-before hitting the submit button, then the link to goto the servlet and carry out the update</p>
+<p>Please type data for all fields you wish to update or leave as null to not alter the current data in that field,
+once all desired updates are entered hit the submit button, then the link that appears</p>
 
 <form name="updatefault" method="post" action="updatefault.jsp">
 ID of fault to update:

@@ -16,7 +16,7 @@ if(Log.isLoggedIn()){
     out.println("Hello user " + Log.getUsername() + " <br />");%>
 <h3>This is the interface for updating entries in the author, developer or administrator table</h3>
 <p>Please select which table you want to make a update the entries in and fill out the two text boxes to update
-the details or leave as null to no update the current data before hitting the submit button, then the link</p>
+the details or leave as null to not update the current data before hitting the submit button, then the link</p>
 <form action="#" name="myTable" id="myTable">
 <select name="Tablechoice">
 <option>      </option>

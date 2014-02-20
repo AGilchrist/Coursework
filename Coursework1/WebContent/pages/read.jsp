@@ -14,7 +14,7 @@
 <%
 if(Log.isLoggedIn()){
     out.println("Hello user " + Log.getUsername() + " <br />");%>
-<h3>This is the interface for reading entries in all tables in the database</h3>
+<h3>This is the interface for reading entries from any table in the database</h3>
 <p>Please select which table you would like to read from, type an id for a specific entry or leave as null to see all entries in the table, then click the submit button and then the link</p>
 <form action="#" name="myTable" id="myTable">
 <select name="Tablechoice">
