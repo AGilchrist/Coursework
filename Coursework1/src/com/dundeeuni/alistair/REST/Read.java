@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import com.dundeeuni.alistair.Beans.Data;
 import com.dundeeuni.alistair.lib.*;
 import com.dundeeuni.alistair.models.SQLDatabase;
 
@@ -30,7 +31,6 @@ import com.dundeeuni.alistair.models.SQLDatabase;
 */
 @WebServlet(
 urlPatterns = {
-"/Read",
 "/Read/*"
 },
 initParams = {
@@ -69,6 +69,7 @@ PreparedStatement pmst = null;
 Connection Conn;
 PreparedStatement pstmt = null;
 SQLDatabase SQL = new SQLDatabase();
+Data data = new Data();
 
 String ID;
 
@@ -87,10 +88,7 @@ command =(Integer)CommandsMap.get(args[2]);
 error("You cannot create entries for a table that doesn't exist",out);
 return;
 }
-if (args.length <4){
-	ID = null;
-}else{
-	ID = args[3];}
+ID = data.getID();
 switch (command){
 case 1: SQL.readfault(pmst, Conn, ID, out);
 break;

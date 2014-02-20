@@ -5,6 +5,8 @@
 <head>
 <jsp:useBean id="Log" class="com.dundeeuni.alistair.Beans.LogUser" scope="session" />
 <jsp:setProperty name="Log" property="*" /> 
+<jsp:useBean id="Data" class="com.dundeeuni.alistair.Beans.Data" scope="session" />
+<jsp:setProperty name="Data" property="*" /> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Delete entries</title>
 </head>
@@ -34,11 +36,11 @@ Name of new entry:
 </form>
 <br>
 <%
-String myID = request.getParameter("myID");
+Data.setID(request.getParameter("myID"));
 out.println("Please click the link below to delete the selected entry <br><br>");
-if(myID != null){
+if(request.getParameter("myID") != null){
 out.println("<a href=\"http://localhost:8080/Coursework1/Delete/" + request.getParameter("Tablechoice") + "/" 
-        + request.getParameter("myID")+ "\">Submit</a>");
+        + "\">Submit</a>");
 }else{out.println("You must provide a id number for the entry you wish to delete <br>");}
 %>   
 <br>

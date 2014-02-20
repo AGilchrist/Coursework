@@ -5,6 +5,8 @@
 <head>
 <jsp:useBean id="Log" class="com.dundeeuni.alistair.Beans.LogUser" scope="session" />
 <jsp:setProperty name="Log" property="*" /> 
+<jsp:useBean id="Data" class="com.dundeeuni.alistair.Beans.Data" scope="session" />
+<jsp:setProperty name="Data" property="*" /> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create a fault</title>
 </head>
@@ -35,20 +37,20 @@ Severity of fault:
 <br/><br/>
 </form>
 <%  
-String mySummary = request.getParameter("mySummary");
-String myDetails = request.getParameter("myDetails");
-String myReporter = request.getParameter("myReporter");
-String mySection = request.getParameter("mySection");
-String mySeverity = request.getParameter("mySeverity");
 out.println("Please click the link below to create the entry <br><br>");
-if(mySummary != null){
-	if(myDetails != null){
-		if(myReporter != null){
-			if(mySection != null){
-				if(mySeverity != null){
-					out.println("<a href=\"http://localhost:8080/Coursework1/Create/fault/" 
-					        + request.getParameter("mySummary") + "/" + request.getParameter("myDetails") + "/" + request.getParameter("myReporter") + "/"
-					        + request.getParameter("mySection") + "/" + request.getParameter("mySeverity") + "\">Create Entry</a>"); 
+if(request.getParameter("mySummary") != null){
+	Data.setSummary(request.getParameter("mySummary"));
+	out.println(request.getParameter("mySummary"));
+	if(request.getParameter("myDetails") != null){
+		Data.setDetails(request.getParameter("myDetails"));
+		out.println(request.getParameter("myDetails"));
+		if(request.getParameter("myReporter") != null){
+			Data.setReporter(request.getParameter("myReporter"));
+			if(request.getParameter("mySection") != null){
+				Data.setSection(request.getParameter("mySection"));
+				if(request.getParameter("mySeverity") != null){
+					Data.setSeverity(request.getParameter("mySeverity"));
+					out.println("<a href=\"http://localhost:8080/Coursework1/Create/fault/" + "\">Create Entry</a>"); 
 				}else{out.println("You must fill in all fields to create an entry <br>");}
 			}else{out.println("You must fill in all fields to create an entry <br>");}
 		}else{out.println("You must fill in all fields to create an entry <br>");}

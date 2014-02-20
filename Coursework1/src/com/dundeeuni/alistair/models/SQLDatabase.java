@@ -9,14 +9,16 @@ import java.sql.SQLException;
 
 public class SQLDatabase {
 	 public SQLDatabase(){}
-	
-public void createfault(PreparedStatement pmst, Connection Conn, String summary, String details, int author, int section, int severity, PrintWriter out ) throws SQLException{
+
+//Create functionality
+	 
+public void createfault(PreparedStatement pmst, Connection Conn, String summary, String details, String author, String section, String severity, PrintWriter out ) throws SQLException{
 		 PreparedStatement pstmt = Conn.prepareStatement("INSERT INTO `fault`(summary,details,author_idauthor, section_idsection, severity) VALUES (?, ?, ?, ?, ?)");
 		 pstmt.setString(1, summary);
 		 pstmt.setString(2, details);
-		 pstmt.setInt(3, author);
-		 pstmt.setInt(4, section);
-		 pstmt.setInt(5, severity);
+		 pstmt.setString(3, author);
+		 pstmt.setString(4, section);
+		 pstmt.setString(5, severity);
 		 try {
 		 pstmt.executeUpdate();
 		 } catch (Exception ex) {
@@ -67,10 +69,10 @@ public void createadministrator(PreparedStatement pmst, Connection Conn, String 
 
 
 
-
+//Read Functionality
 	
 public void readfault(PreparedStatement pmst, Connection Conn, String faultid, PrintWriter out ) throws SQLException{
-	if(faultid == null){
+	if(faultid.equals("null")){
 		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `fault`");
 		try {
 			ResultSet rs = pstmt.executeQuery();
@@ -93,7 +95,7 @@ public void readfault(PreparedStatement pmst, Connection Conn, String faultid, P
 }
 
 public void readreporter(PreparedStatement pmst, Connection Conn, String authorid, PrintWriter out ) throws SQLException{
-	if(authorid == null){
+	if(authorid.equals("null")){
 		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `author`");
 		try {
 			ResultSet rs = pstmt.executeQuery();
@@ -116,7 +118,7 @@ public void readreporter(PreparedStatement pmst, Connection Conn, String authori
 }
 
 public void readdeveloper(PreparedStatement pmst, Connection Conn, String developerid, PrintWriter out ) throws SQLException{
-	if(developerid == null){
+	if(developerid.equals("null")){
 		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `developer`");
 		try {
 			ResultSet rs = pstmt.executeQuery();
@@ -139,7 +141,7 @@ public void readdeveloper(PreparedStatement pmst, Connection Conn, String develo
 }
 
 public void readadministrator(PreparedStatement pmst, Connection Conn, String administratorid, PrintWriter out ) throws SQLException{
-	if(administratorid == null){
+	if(administratorid.equals("null")){
 		PreparedStatement pstmt = Conn.prepareStatement("SELECT * FROM `administrator`");
 		try {
 			ResultSet rs = pstmt.executeQuery();
@@ -163,10 +165,12 @@ public void readadministrator(PreparedStatement pmst, Connection Conn, String ad
 
 
 
+//Update functionality
+
 
 public void updatefault(PreparedStatement pmst, Connection Conn, String oldid, String summary, String details, String author, String section, String severity, PrintWriter out ) throws SQLException{
 	int id = Integer.parseInt(oldid);
-	if(summary != null){
+	if(!summary.equals("null")){
 		try{
 			PreparedStatement pstmt = Conn.prepareStatement("UPDATE `fault` SET summary = ? WHERE idfault = ?");
 			pstmt.setString(1, summary);
@@ -177,7 +181,7 @@ public void updatefault(PreparedStatement pmst, Connection Conn, String oldid, S
 			} 
 		}
 	
-	if(details != null){
+	if(!details.equals("null")){
 		try{
 			PreparedStatement pstmt = Conn.prepareStatement("UPDATE `fault` SET details = ? WHERE idfault = ?");
 			pstmt.setString(1, details);
@@ -188,7 +192,7 @@ public void updatefault(PreparedStatement pmst, Connection Conn, String oldid, S
 			} 
 		}
 	
-	if(author != null){
+	if(!author.equals("null")){
 		int aint = Integer.parseInt(author);
 			try{
 			PreparedStatement pstmt = Conn.prepareStatement("UPDATE `fault` SET author_idauthor = ? WHERE idfault = ?");
@@ -200,7 +204,7 @@ public void updatefault(PreparedStatement pmst, Connection Conn, String oldid, S
 			} 
 		}
 	
-	if(section != null){
+	if(!section.equals("null")){
 		try{
 			int sectionint = Integer.parseInt(section);
 			PreparedStatement pstmt = Conn.prepareStatement("UPDATE `fault` SET section_idsection = (?) WHERE idfault = ?");
@@ -212,7 +216,7 @@ public void updatefault(PreparedStatement pmst, Connection Conn, String oldid, S
 			} 
 		}
 	
-	if(severity != null){
+	if(!severity.equals("null")){
 		try{
 			int severityint = Integer.parseInt(severity);
 			PreparedStatement pstmt = Conn.prepareStatement("UPDATE `fault` SET severity = ? WHERE idfault = ?");
@@ -227,7 +231,7 @@ public void updatefault(PreparedStatement pmst, Connection Conn, String oldid, S
 
 public void updatereporter(PreparedStatement pmst, Connection Conn, String oldid, String name, String email, PrintWriter out )throws SQLException{
 	int id = Integer.parseInt(oldid);
-	if(name != null){
+	if(!name.equals("null")){
 		try{
 			PreparedStatement pstmt = Conn.prepareStatement("UPDATE `author` SET name = ? WHERE idauthor = ?");
 			pstmt.setString(1, name);
@@ -238,7 +242,7 @@ public void updatereporter(PreparedStatement pmst, Connection Conn, String oldid
 			} 
 		}
 
-	if(email != null){
+	if(!email.equals("null")){
 		try{
 			PreparedStatement pstmt = Conn.prepareStatement("UPDATE `author` SET email = ? WHERE idauthor = ?");
 			pstmt.setString(1, email);
@@ -252,7 +256,7 @@ public void updatereporter(PreparedStatement pmst, Connection Conn, String oldid
 
 public void updatedeveloper(PreparedStatement pmst, Connection Conn, String oldid, String name, String email, PrintWriter out )throws SQLException{
 	int id = Integer.parseInt(oldid);
-	if(name != null){
+	if(!name.equals("null")){
 		try{
 			PreparedStatement pstmt = Conn.prepareStatement("UPDATE `developer` SET name = ? WHERE iddeveloper = ?");
 			pstmt.setString(1, name);
@@ -263,7 +267,7 @@ public void updatedeveloper(PreparedStatement pmst, Connection Conn, String oldi
 			} 
 		}
 	
-	if(email != null){
+	if(!email.equals("null")){
 		try{
 			PreparedStatement pstmt = Conn.prepareStatement("UPDATE `developer` SET email = ? WHERE iddeveloper = ?");
 			pstmt.setString(1, email);
@@ -277,7 +281,7 @@ public void updatedeveloper(PreparedStatement pmst, Connection Conn, String oldi
 
 public void updateadministrator(PreparedStatement pmst, Connection Conn, String oldid, String name, String email, PrintWriter out )throws SQLException{
 	int id = Integer.parseInt(oldid);
-	if(name != null){
+	if(!name.equals("null")){
 		try{
 			PreparedStatement pstmt = Conn.prepareStatement("UPDATE `administrator` SET name = ? WHERE idadministrator = ?");
 			pstmt.setString(1, name);
@@ -288,7 +292,7 @@ public void updateadministrator(PreparedStatement pmst, Connection Conn, String 
 			} 
 		}
 	
-	if(email != null){
+	if(!email.equals("null")){
 		try{
 			PreparedStatement pstmt = Conn.prepareStatement("UPDATE `administrator` SET email = ? WHERE idadministrator = ?");
 			pstmt.setString(1, email);
@@ -303,8 +307,11 @@ public void updateadministrator(PreparedStatement pmst, Connection Conn, String 
 
 
 
-public void deletefault(PreparedStatement pmst, Connection Conn, String id, PrintWriter out ) throws SQLException{
-	PreparedStatement pstmt = Conn.prepareStatement("DELETE FROM `fault` WHERE idfault = ?");
+//Delete functionality
+
+
+public void deletefault(PreparedStatement pstmt, Connection Conn, String id, PrintWriter out ) throws SQLException{
+	pstmt = Conn.prepareStatement("DELETE FROM `fault` WHERE idfault = ?");
 	pstmt.setString(1, id);
 	try {
 		pstmt.executeUpdate();
@@ -357,6 +364,7 @@ private void print(ResultSet rs, PrintWriter out) throws SQLException{
 	            String Value = rs.getString(i);
 	            out.print(meta.getColumnName(i) + ": " + Value);
 	          }
+
 	    }  
 	out.close();
 	return;

@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import com.dundeeuni.alistair.Beans.Data;
 import com.dundeeuni.alistair.lib.*;
 import com.dundeeuni.alistair.models.SQLDatabase;
 
@@ -64,13 +65,15 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 Connection Conn;
 PreparedStatement pstmt = null;
 SQLDatabase SQL = new SQLDatabase();
+Data data = new Data();
 
-String ID = null;
-String field1 = null;
-String field2 = null;
-int Reporter;
-int Section;
-int Severity;
+String Summary;
+String Details;
+String Name;
+String Email;
+String Reporter;
+String Section;
+String Severity;
 
 try {
 Conn = _ds.getConnection();
@@ -80,8 +83,8 @@ response.setContentType("text/html");
 PrintWriter out=null;
 out =	new PrintWriter(response.getOutputStream());
 
-if (args.length <5){
-error("Too few arguments",out);
+if (args.length >3){
+error("Too many arguments",out);
 return;
 }
 int command;
@@ -93,27 +96,34 @@ return;
 }
 System.out.println("Command"+command);
 try{
-field1 = args[3];
-field2 = args[4];
 }catch(Exception et){
 error("Bad numbers in calc",out);
 return;	
 }
 switch (command){
 case 1:	{
-	if (args.length <5){
-		error("Too few arguments",out);
-		return;}
-	Reporter = Integer.parseInt(args[5]);
-	Section = Integer.parseInt(args[6]);
-	Severity = Integer.parseInt(args[7]);
-	SQL.createfault(pstmt, Conn, field1, field2, Reporter, Section, Severity, out);}
+	Summary = data.getSummary();
+	Details = data.getDetails();
+	Reporter = data.getReporter();
+	Section = data.getSection();
+	Severity = data.getSeverity();
+	SQL.createfault(pstmt, Conn, Summary, Details, Reporter, Section, Severity, out);}
 break;
-case 2: SQL.createreporter(pstmt, Conn, field1, field2, out);
+case 2: {
+	Name = data.getName();
+	Email = data.getEmail();
+	SQL.createreporter(pstmt, Conn, Name, Email, out);}
 break;
-case 3: SQL.createdeveloper(pstmt, Conn, field1, field2, out);
+case 3: {
+	Name = data.getName();
+	Email = data.getEmail();
+	SQL.createdeveloper(pstmt, Conn, Name, Email, out);}
 break;
-case 4: SQL.createadministrator(pstmt, Conn, field1, field2, out);
+case 4: {
+	Name = data.getName();
+	Email = data.getEmail();
+	SQL.createadministrator(pstmt, Conn, Name, Email, out);
+}
 break;
 default: error("No such table",out);
 }

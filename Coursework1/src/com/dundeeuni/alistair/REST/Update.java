@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import com.dundeeuni.alistair.Beans.Data;
 import com.dundeeuni.alistair.lib.*;
 import com.dundeeuni.alistair.models.SQLDatabase;
 
@@ -65,10 +66,13 @@ PreparedStatement pmst = null;
 Connection Conn;
 PreparedStatement pstmt = null;
 SQLDatabase SQL = new SQLDatabase();
+Data data = new Data();
 
 String ID;
-String field1;
-String field2;
+String Summary;
+String Details;
+String Name;
+String Email;
 String Reporter;
 String Section;
 String Severity;
@@ -78,11 +82,11 @@ Conn = _ds.getConnection();
 Convertors ut = new Convertors();
 String args[]=ut.SplitRequestPath(request);
 response.setContentType("text/html");
-PrintWriter out=null;
+PrintWriter out = null;
 out =	new PrintWriter(response.getOutputStream());
 
-if (args.length <5){
-error("Warning too few args",out);
+if (args.length >4){
+error("Too many arguments",out);
 return;
 }
 int command;
@@ -94,35 +98,34 @@ return;
 }
 System.out.println("Command"+command);
 try{
-ID = args[3];
-field1 = args[4];
-	if(field1.equals("null")){field1 = null;}
-field2 = args[5];
-	if(field2.equals("null")){field2 = null;}
+ID = data.getID();
 }catch(Exception et){
 error("Bad numbers in calc",out);
 return;	
 }
 switch (command){
 case 1: {
-	if (args.length <9){
-		error("Warning too few args for this command",out);
-		return;
-		}else{
-			Reporter = args[6];
-			if(Reporter.equals("null")){Reporter = null;}
-			Section = args[7];
-			if(Section.equals("null")){Section = null;}
-			Severity = args[8];
-			if(Severity.equals("null")){Severity = null;}
-			SQL.updatefault(pmst, Conn, ID, field1, field2, Reporter, Section, Severity, out);}
-		}
+		Summary = data.getSummary();
+		Details = data.getDetails();
+		Reporter = data.getReporter();
+		Section = data.getSection();
+		Severity = data.getSeverity();
+		SQL.updatefault(pmst, Conn, ID, Summary, Details, Reporter, Section, Severity, out);}
 break;
-case 2: SQL.updatereporter(pmst, Conn, ID, field1, field2, out);
+case 2: {
+	Name = data.getName();
+	Email = data.getEmail();
+	SQL.updatereporter(pmst, Conn, ID, Name, Email, out);}
 break;
-case 3: SQL.updatedeveloper(pmst, Conn, ID, field1, field2, out);
+case 3: {
+	Name = data.getName();
+	Email = data.getEmail();
+	SQL.updatedeveloper(pmst, Conn, ID, Name, Email, out);}
 break;
-case 4: SQL.updateadministrator(pmst, Conn, ID, field1, field2, out);
+case 4: {
+	Name = data.getName();
+	Email = data.getEmail();
+	SQL.updateadministrator(pmst, Conn, ID, Name, Email, out);}
 break;
 default: error("No such table",out);
 }
@@ -139,52 +142,6 @@ out.println("<h1>You have a an error in your input</h1>");
 out.println("<h2>"+mess+"</h2>");
 out.close();
 return;
-}
-
-private void developer(PreparedStatement pmst, Connection Conn, String oldid, String name, String email, PrintWriter out )throws SQLException{
-	int id = Integer.parseInt(oldid);
-	if(name != null){
-		try{
-	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `developer` SET name = ? WHERE iddeveloper = ?");
-	pstmt.setString(1, name);
-	pstmt.setInt(2, id);
-	pstmt.executeUpdate();} catch (Exception ex) {
-		System.out.println("Cannot do that name "+ex);
-		return;	
-		} }
-	
-	if(email != null){
-		try{
-	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `developer` SET email = ? WHERE iddeveloper = ?");
-	pstmt.setString(1, email);
-	pstmt.setInt(2, id);
-	pstmt.executeUpdate();} catch (Exception ex) {
-		System.out.println("Cannot do that email "+ex);
-		return;	
-		} }
-}
-
-private void administrator(PreparedStatement pmst, Connection Conn, String oldid, String name, String email, PrintWriter out )throws SQLException{
-	int id = Integer.parseInt(oldid);
-	if(name != null){
-		try{
-	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `administrator` SET name = ? WHERE idadministrator = ?");
-	pstmt.setString(1, name);
-	pstmt.setInt(2, id);
-	pstmt.executeUpdate();} catch (Exception ex) {
-		System.out.println("Cannot do that name "+ex);
-		return;	
-		} }
-	
-	if(email != null){
-		try{
-	PreparedStatement pstmt = Conn.prepareStatement("UPDATE `administrator` SET email = ? WHERE idadministrator = ?");
-	pstmt.setString(1, email);
-	pstmt.setInt(2, id);
-	pstmt.executeUpdate();} catch (Exception ex) {
-		System.out.println("Cannot do that email "+ex);
-		return;	
-		} }
 }
 
 /**

@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import com.dundeeuni.alistair.Beans.Data;
 import com.dundeeuni.alistair.lib.*;
 import com.dundeeuni.alistair.models.SQLDatabase;
 
@@ -64,6 +65,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 Connection Conn;
 PreparedStatement pstmt = null;
 SQLDatabase SQL = new SQLDatabase();
+Data data = new Data();
 
 String ID;
 
@@ -74,9 +76,10 @@ String args[]=ut.SplitRequestPath(request);
 response.setContentType("text/html");
 PrintWriter out=null;
 out =	new PrintWriter(response.getOutputStream());
+ID = data.getID();
 
-if (args.length <4){
-error("You must provide an ID number for the entry you wish to delete",out);
+if (args.length >3){
+error("Too many arguments",out);
 return;
 }
 int command;
@@ -88,7 +91,6 @@ return;
 }
 System.out.println("Command"+command);
 try{
-ID = args[3];
 }catch(Exception et){
 error("Bad numbers in calc",out);
 return;	
@@ -96,8 +98,7 @@ return;
 switch (command){
 case 1: SQL.deletefault(pstmt, Conn, ID, out);
 break;
-case 2: {
-	SQL.deletereporter(pstmt, Conn, ID, out);}
+case 2: SQL.deletereporter(pstmt, Conn, ID, out);
 break;
 case 3: SQL.deletedeveloper(pstmt, Conn, ID, out);
 break;

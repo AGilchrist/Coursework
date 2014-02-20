@@ -5,15 +5,17 @@
 <head>
 <jsp:useBean id="Log" class="com.dundeeuni.alistair.Beans.LogUser" scope="session" />
 <jsp:setProperty name="Log" property="*" /> 
+<jsp:useBean id="Data" class="com.dundeeuni.alistair.Beans.Data" scope="session" />
+<jsp:setProperty name="Data" property="*" /> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Read entries</title>
 </head>
-<body>
+<body onLoad="Default()">
 <%
 if(Log.isLoggedIn()){
     out.println("Hello user " + Log.getUsername() + " <br />");%>
 <h3>This is the interface for reading entries in all tables in the database</h3>
-<p>Please select which table you would like to read from, type an id for a specific entry or leave blank to see all entries in the table, then click the submit button and then the link</p>
+<p>Please select which table you would like to read from, type an id for a specific entry or leave as null to see all entries in the table, then click the submit button and then the link</p>
 <form action="#" name="myTable" id="myTable">
 <select name="Tablechoice">
 <option>      </option>
@@ -33,12 +35,10 @@ Name of new entry:
 </form>
 </form>
 <%  
-String myTable = request.getParameter("Tablechoice");
-String myID = request.getParameter("myID");
+Data.setID(request.getParameter("myID"));
 out.println("Please click the link below to Read the selected entry or entries <br><br>");
-if(myID != null){
-out.println("<a href=\"http://localhost:8080/Coursework1/Read/" + request.getParameter("Tablechoice") + "/" 
-        + request.getParameter("myID")+ "\">Submit</a>");  
+if(request.getParameter("myID") != null){
+out.println("<a href=\"http://localhost:8080/Coursework1/Read/" + request.getParameter("Tablechoice") + "/" + "\">Submit</a>");  
 }else{out.println("You must provide a id number for the entry you wish to delete <br>");}
 %>   
 <br><br>
@@ -57,6 +57,12 @@ else{
  {
  window.location.href = pageURL;
  }
+ 
+ function Default(){
+	    if(document.myTable.myID.value==""){
+	        document.myTable.myID.value = null;
+	    }
+	}
 </script>
 </body>
 </html>

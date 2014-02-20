@@ -5,6 +5,8 @@
 <head>
 <jsp:useBean id="Log" class="com.dundeeuni.alistair.Beans.LogUser" scope="session" />
 <jsp:setProperty name="Log" property="*" /> 
+<jsp:useBean id="Data" class="com.dundeeuni.alistair.Beans.Data" scope="session" />
+<jsp:setProperty name="Data" property="*" /> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Update an entry</title>
 </head>
@@ -41,14 +43,12 @@ Email address:
 </form>
 </form>
 <%  
-String myTable = request.getParameter("Tablechoice");
-String myID = request.getParameter("myID");
-String myName = request.getParameter("myName");
-String myemail = request.getParameter("myemail");
+Data.setName(request.getParameter("myName"));
+Data.setEmail(request.getParameter("myemail"));
 out.println("Please click the link below to Update the selected entry or entries <br><br>");
-if(myID != null){
-	out.println("<a href=\"http://localhost:8080/Coursework1/Update/" + request.getParameter("Tablechoice") + "/" 
-	+ request.getParameter("myID") + "/" + request.getParameter("myName") + "/" + request.getParameter("myemail") + "\">Submit</a>"); 
+if(request.getParameter("myID") != null){
+	Data.setID(request.getParameter("myID"));
+	out.println("<a href=\"http://localhost:8080/Coursework1/Update/" + request.getParameter("Tablechoice") + "/" + "\">Submit</a>"); 
 }else{out.println("You must provide a id number for the entry you wish to update <br> Make sure it is valid or nothing will happen on the database");}
 %>   
 <br><br>

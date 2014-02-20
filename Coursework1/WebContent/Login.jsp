@@ -18,9 +18,6 @@ Password:
 <br/>
 <br/>
 <input type="Submit" value="Log In">
-<br>
-<br>
-<input type="button" value="Return to Home Page" name="Home" onclick="openPage('http://localhost:8080/Coursework1/index.jsp')"/>
 </form>
 
 <%
@@ -28,8 +25,7 @@ String myUsername = request.getParameter("myUsername");
 String myPassword = request.getParameter("myPassword");
 Log.LogIn(myUsername, myPassword);
 if(Log.isLoggedIn())
-out.println("Welcome user " + myUsername + " You are now logged in <br/>");
-
+	response.sendRedirect("http://localhost:8080/Coursework1/index.jsp");;
 %>
 
 <script type="text/javascript">

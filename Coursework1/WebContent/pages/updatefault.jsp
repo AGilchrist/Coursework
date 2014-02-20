@@ -5,6 +5,8 @@
 <head>
 <jsp:useBean id="Log" class="com.dundeeuni.alistair.Beans.LogUser" scope="session" />
 <jsp:setProperty name="Log" property="*" /> 
+<jsp:useBean id="Data" class="com.dundeeuni.alistair.Beans.Data" scope="session" />
+<jsp:setProperty name="Data" property="*" /> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Update an entry</title>
 </head>
@@ -46,18 +48,16 @@ Severity of fault:
 <br/>
 </form>
 <%  
-String myID = request.getParameter("myID");
-String mySummary = request.getParameter("mySummary");
-String myDetails = request.getParameter("myDetails");
-String myReporter = request.getParameter("myReporter");
-String mySection = request.getParameter("mySection");
-String mySeverity = request.getParameter("mySeverity");
+Data.setSummary(request.getParameter("mySummary"));
+Data.setDetails(request.getParameter("myDetails"));
+Data.setReporter(request.getParameter("myReporter"));
+Data.setSection(request.getParameter("mySection"));
+Data.setSeverity(request.getParameter("mySeverity"));
+
 out.println("Please click the link below to Update the selected entry or entries <br><br>");
-if(myID != null){
-out.println("<a href=\"http://localhost:8080/Coursework1/Update/fault/" 
-		+ request.getParameter("myID") + "/" + request.getParameter("mySummary") + "/" + request.getParameter("myDetails") + "/" 
-		+ request.getParameter("myReporter") + "/" + request.getParameter("mySection") + "/" + request.getParameter("mySeverity") 
-        + "\">Create Entry</a>");  
+if(request.getParameter("myID") != null){
+	Data.setID(request.getParameter("myID"));
+	out.println("<a href=\"http://localhost:8080/Coursework1/Update/fault/" + "\">Create Entry</a>");  
 }else{out.println("You must provide a id number for the entry you wish to update <br> Make sure it is valid or nothing will happen on the database");}
 %>   
 <br>

@@ -5,6 +5,8 @@
 <head>
 <jsp:useBean id="Log" class="com.dundeeuni.alistair.Beans.LogUser" scope="session" />
 <jsp:setProperty name="Log" property="*" /> 
+<jsp:useBean id="Data" class="com.dundeeuni.alistair.Beans.Data" scope="session" />
+<jsp:setProperty name="Data" property="*" /> 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Create an entry</title>
 </head>
@@ -36,14 +38,12 @@ Email address:
 </form>
 </form>
 <%  
-String myTable = request.getParameter("Tablechoice");
-String myName = request.getParameter("myName");
-String myemail = request.getParameter("myemail");
+Data.setName(request.getParameter("myName"));
+Data.setEmail(request.getParameter("myemail"));
 out.println("Please click the link below to create the entry <br><br>");
-if(myName != null){
-	if(myemail != null){
-		out.println("<a href=\"http://localhost:8080/Coursework1/Create/" + request.getParameter("Tablechoice") + "/" 
-        + request.getParameter("myName") + "/" + request.getParameter("myemail") + "\">Create Entry</a>"); 
+if(request.getParameter("myName") != null){
+	if(request.getParameter("myemail") != null){
+		out.println("<a href=\"http://localhost:8080/Coursework1/Create/" + request.getParameter("Tablechoice") + "/" + "\">Create Entry</a>"); 
 	}else{out.println("You must fill in all fields to create an entry <br>");}
 }else{out.println("You must fill in all fields to create an entry <br>");}
 %>   

@@ -1,92 +1,85 @@
 package com.dundeeuni.alistair.Beans;
 
 public class Data {
-	static private int ID, Reporter, Section, Severity;
-	static private String Summary, Details, Name, Email;
+	static private String ID, Summary, Details, Name, Email, Reporter, Section, Severity;
 	
 	public Data(){
-		ID = 0;
-		Summary = "";
-		Details = "";
-		Reporter = 0;
-		Section = 0;
-		Severity = 0;
-		Name = "";
-		Email = "";
+		
 	}
 	
-	static public void setID(int id){
+	public void setID(String id){
 		ID = id;
 	}
 	
-	static public void setSummary(String summary){
+	public void setSummary(String summary){
 		Summary = summary;
 	}
 	
-	static public void setDetails(String details){
+	public void setDetails(String details){
 		Details = details;
 	}
 	
-	static public void setReporter(int reporter){
+	public void setReporter(String reporter){
 		Reporter = reporter;
 	}
 	
-	static public void setSection(int section){
+	public void setSection(String section){
 		Section = section;
 	}
 	
-	static public void setSeverity(int severity){
+	public void setSeverity(String severity){
 		Severity = severity;
 	}
 	
-	static public void setName(String name){
+	public void setName(String name){
 		Name = name;
 	}
 	
-	static public void setEmail(String email){
+	public void setEmail(String email){
 		Email = email;
 	}
 	
 	
-	static public int getID(){
+	
+	public String getID(){
 		return ID;
 	}
 	
-	static public String getSummary(){
+	public String getSummary(){
 		return Summary;
 	}
 	
-	static public String getDetails(){
+	public String getDetails(){
 		return Details;
 	}
 	
-	static public int getReporter(){
+	public String getReporter(){
 		return Reporter;
 	}
 	
-	static public int getSection(){
+	public String getSection(){
 		return Section;
 	}
 	
-	static public int getSeverity(){
+	public String getSeverity(){
 		return Severity;
 	}
 	
-	static public String getName(){
+	public String getName(){
 		return Name;
 	}
 	
-	static public String getEmail(){
+	public String getEmail(){
 		return Email;
 	}
 	
-	static public void Reset(){
-		ID = 0;
+	public void Reset(){
+		ID = "";
 		Summary = "";
 		Details = "";
-		Reporter = 0;
-		Section = 0;
-		Severity = 0;
+		Reporter = "";
+		Section = "";
+		Severity = "";
 		Name = "";
 		Email = "";
 	}
