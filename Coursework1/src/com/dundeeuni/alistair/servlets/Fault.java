@@ -27,7 +27,7 @@ urlPatterns = {
 "/Fault/*"
 },
 initParams = {
-@WebInitParam(name = "data-source", value = "jdbc/Faultdb")
+@WebInitParam(name = "data-source", value = "jdbc/130025328Faultdb")
 })
 public class Fault extends HttpServlet {
 private static final long serialVersionUID = 1L;
@@ -48,7 +48,8 @@ private DataSource _ds = null;
 public void init(ServletConfig config) throws ServletException {
 // TODO Auto-generated method stub
 Dbutils db = new Dbutils();
-        _ds=db.assemble(config);
+db.createSchema();
+_ds=db.assemble(config);
 }
 
 /**

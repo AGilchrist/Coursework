@@ -1,6 +1,8 @@
 package com.dundeeuni.alistair.lib;
 
+
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
@@ -12,6 +14,8 @@ import javax.naming.NamingException;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.sql.DataSource;
+
+import com.mysql.jdbc.Statement;
 
 
 
@@ -41,7 +45,7 @@ System.out.println("JNDI failure: " + ex);
 public DataSource assemble(ServletConfig config) throws ServletException {
 DataSource _ds = null;
 String dataSourceName = config.getInitParameter("data-source");
-System.out.println("Data Source Parameter" + dataSourceName);
+System.out.println("Data Source Parameter " + dataSourceName);
 if (dataSourceName == null)
 throw new ServletException("data-source must be specified");
 Context envContext = null;
@@ -168,7 +172,7 @@ pmst.executeUpdate();
 System.out.println("Can not insert names in sections "+ex);
 return;	
 }
-sqlQuery="INSERT INTO `developer` (`name`,`email`) VALUES ('Danny','dannyboy@gmail.com'),('Shayle','shayl@gmail.com'),('Harry','HP@gmail.com');";
+sqlQuery="INSERT INTO `developer` (`name`,`email`) VALUES ('Danny','dannyboy@gmail.com'),('Shayle','shayl@gmail.com'),('Harry','HD@gmail.com');";
 try {
 pmst = Conn.prepareStatement(sqlQuery);
 pmst.executeUpdate();
@@ -202,6 +206,29 @@ return;
 
 
  
+
+}
+
+public void createSchema(){
+String url = "jdbc:mysql://localhost";
+Connection conn=null;
+try {
+Class.forName ("com.mysql.jdbc.Driver").newInstance ();
+conn = DriverManager.getConnection (url, "root", "Cl1m8t3;");
+
+}catch (Exception et){
+System.out.println("Can't get conenction to create schema "+et);
+return;
+}
+String sqlcreateSchema="Create database if not exists faultdb ;";
+try{
+java.sql.Statement statement=conn.createStatement();
+statement.execute(sqlcreateSchema);
+conn.close();
+}catch (Exception et){
+System.out.println("Can not create schema ");
+return;
+}
 
 }
 }

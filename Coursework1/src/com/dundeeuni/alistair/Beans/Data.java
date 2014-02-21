@@ -1,8 +1,8 @@
 package com.dundeeuni.alistair.Beans;
 
 public class Data {
-	static private String ID, Summary, Details, Name, Email, Reporter, Section, Severity;
-	boolean database = false;
+	static private String ID, Summary, Details, Name, Email, Reporter, Section, Severity, Table;
+	static boolean database = false;
 	
 	public Data(){
 		
@@ -44,6 +44,10 @@ public class Data {
 		database = state;
 	}
 	
+	public void setTable(String tablename){
+		Table = tablename;
+	}
+		
 	
 	public String getID(){
 		return ID;
@@ -79,6 +83,10 @@ public class Data {
 	
 	public Boolean getDatabase(){
 		return database;
+	}
+	
+	public String getTable(){
+		return Table;
 	}
 	
 	public void Reset(){
