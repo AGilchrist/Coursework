@@ -79,7 +79,7 @@ public void createadministrator(PreparedStatement pstmt, Connection Conn, String
 //Read Functionality
 	
 public void readfault(PreparedStatement pstmt, Connection Conn, HttpServletResponse response, String faultid, PrintWriter out ) throws SQLException, InterruptedException, IOException{
-	if(faultid.equals("null")){
+	if(faultid.equals("")){
 		pstmt = Conn.prepareStatement("SELECT * FROM `fault`");
 		try {
 			ResultSet rs = pstmt.executeQuery();
@@ -106,7 +106,7 @@ public void readfault(PreparedStatement pstmt, Connection Conn, HttpServletRespo
 }
 
 public void readreporter(PreparedStatement pstmt, Connection Conn, HttpServletResponse response, String authorid, PrintWriter out ) throws SQLException{
-	if(authorid.equals("null")){
+	if(authorid.equals("")){
 		pstmt = Conn.prepareStatement("SELECT * FROM `author`");
 		try {
 			ResultSet rs = pstmt.executeQuery();
@@ -129,7 +129,7 @@ public void readreporter(PreparedStatement pstmt, Connection Conn, HttpServletRe
 }
 
 public void readdeveloper(PreparedStatement pstmt, Connection Conn, HttpServletResponse response, String developerid, PrintWriter out ) throws SQLException{
-	if(developerid.equals("null")){
+	if(developerid.equals("")){
 		pstmt = Conn.prepareStatement("SELECT * FROM `developer`");
 		try {
 			ResultSet rs = pstmt.executeQuery();
@@ -152,7 +152,7 @@ public void readdeveloper(PreparedStatement pstmt, Connection Conn, HttpServletR
 }
 
 public void readadministrator(PreparedStatement pstmt, Connection Conn, HttpServletResponse response, String administratorid, PrintWriter out ) throws SQLException{
-	if(administratorid.equals("null")){
+	if(administratorid.equals("")){
 		pstmt = Conn.prepareStatement("SELECT * FROM `administrator`");
 		try {
 			ResultSet rs = pstmt.executeQuery();
