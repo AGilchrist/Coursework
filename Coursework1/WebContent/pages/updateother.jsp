@@ -10,13 +10,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Update an entry</title>
 </head>
-<body onLoad="Default()">
+<body>
 <%
 if(Log.isLoggedIn()){
     out.println("Hello user " + Log.getUsername() + " <br />");%>
 <h3>This is the interface for updating entries in the author, developer or administrator table</h3>
 <p>Please select which table you want to make a update the entries in and fill out the two text boxes to update
-the details or leave as null to not update the current data before hitting the submit button, then the link</p>
+the details or leave blank for that field to be ignored, when done hit the submit button, then the link</p>
 <form action="#" name="myTable" id="myTable">
 <select name="Tablechoice">
 <option>      </option>
@@ -68,14 +68,6 @@ function openPage(pageURL)
  window.location.href = pageURL;
  }
  
-function Default(){
-    if(document.myTable.myName.value==""){
-        document.myTable.myName.value = null;
-    }
-    if(document.myTable.myemail.value==""){
-        document.myTable.myemail.value = null;
-    }
-}
 </script>
 </body>
 </html>

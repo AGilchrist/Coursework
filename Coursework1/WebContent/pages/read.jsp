@@ -10,12 +10,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Read entries</title>
 </head>
-<body onLoad="Default()">
+<body>
 <%
 if(Log.isLoggedIn()){
     out.println("Hello user " + Log.getUsername() + " <br />");%>
 <h3>This is the interface for reading entries from any table in the database</h3>
-<p>Please select which table you would like to read from, type an id for a specific entry or write null to see all entries in the table, then click the submit button and then the link</p>
+<p>Please select which table you would like to read from, type an id for a specific entry or leave blank to see all entries in the table, then click the submit button and then the link</p>
 <form action="#" name="myTable" id="myTable">
 <select name="Tablechoice">
 <option>      </option>
@@ -57,12 +57,6 @@ else{
  {
  window.location.href = pageURL;
  }
- 
- function Default(){
-	    if(document.myTable.myID.value==""){
-	        document.myTable.myID.value = null;
-	    }
-	}
 </script>
 </body>
 </html>

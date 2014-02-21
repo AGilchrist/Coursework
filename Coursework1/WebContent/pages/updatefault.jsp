@@ -10,12 +10,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Update an entry</title>
 </head>
-<body onLoad="Default()">
+<body>
 <%
 if(Log.isLoggedIn()){
     out.println("Hello user " + Log.getUsername() + " <br />");%>
 <h3>This is the interface for updating existing entries in the fault table</h3>
-<p>Please type data for all fields you wish to update or leave as null to not alter the current data in that field,
+<p>Please type data for all fields you wish to update or leave blank to not alter the current data in that field,
 once all desired updates are entered hit the submit button, then the link that appears</p>
 
 <form name="updatefault" method="post" action="updatefault.jsp">
@@ -76,24 +76,6 @@ else{
 function openPage(pageURL)
  {
  window.location.href = pageURL;
- }
-
- function Default(){
-     if(document.updatefault.mySummary.value==""){
-         document.updatefault.mySummary.value = null;
-     }
-     if(document.updatefault.myDetails.value==""){
-         document.updatefault.myDetails.value = null;
-     }
-     if(document.updatefault.myReporter.value==""){
-         document.updatefault.myReporter.value = null;
-     }
-     if(document.updatefault.mySection.value==""){
-         document.updatefault.mySection.value = null;
-     }
-     if(document.updatefault.mySeverity.value==""){
-         document.updatefault.mySeverity.value = null;
-     }
  }
 </script>
 </body>
