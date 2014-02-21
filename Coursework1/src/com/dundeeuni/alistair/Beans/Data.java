@@ -44,11 +44,7 @@ public class Data {
 		database = state;
 	}
 	
-	public void setTable(String tablename){
-		Table = tablename;
-	}
-		
-	
+
 	public String getID(){
 		return ID;
 	}
@@ -83,10 +79,6 @@ public class Data {
 	
 	public Boolean getDatabase(){
 		return database;
-	}
-	
-	public String getTable(){
-		return Table;
 	}
 	
 	public void Reset(){

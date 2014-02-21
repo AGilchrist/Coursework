@@ -214,7 +214,7 @@ String url = "jdbc:mysql://localhost";
 Connection conn=null;
 try {
 Class.forName ("com.mysql.jdbc.Driver").newInstance ();
-conn = DriverManager.getConnection (url, "root", "Cl1m8t3;");
+conn = DriverManager.getConnection (url, "root", "RootUser");
 
 }catch (Exception et){
 System.out.println("Can't get conenction to create schema "+et);

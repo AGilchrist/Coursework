@@ -25,7 +25,7 @@ String myUsername = request.getParameter("myUsername");
 String myPassword = request.getParameter("myPassword");
 Log.LogIn(myUsername, myPassword);
 if(Log.isLoggedIn())
-	response.sendRedirect("http://localhost:8080/Coursework1/index.jsp");
+	response.sendRedirect("http://ac32007.cloudapp.net:8080/130025328Coursework1/index.jsp");
 %>
 
 <script type="text/javascript">

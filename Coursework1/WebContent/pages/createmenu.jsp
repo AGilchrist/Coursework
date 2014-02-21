@@ -17,19 +17,19 @@ if(Log.isLoggedIn()){
 <form action="#">
 <select name="URL" onchange="window.location.href= this.form.URL.options[this.form.URL.selectedIndex].value">
 <option>      </option>
-<option value="http://localhost:8080/Coursework1/pages/createfault.jsp">A fault</option>
-<option value="http://localhost:8080/Coursework1/pages/createother.jsp">An author, developer or administrator</option>
+<option value="http://ac32007.cloudapp.net:8080/130025328Coursework1/pages/createfault.jsp">A fault</option>
+<option value="http://ac32007.cloudapp.net:8080/130025328Coursework1/pages/createother.jsp">An author, developer or administrator</option>
 </select>
 <br>
 <br>
 </form>
-<input type=button value="Back to Home Page" onclick="openPage('http://localhost:8080/Coursework1/index.jsp')">
+<input type=button value="Back to Home Page" onclick="openPage('http://ac32007.cloudapp.net:8080/130025328Coursework1/index.jsp')">
 <br>
 <br>
-<input type="button" value="Log Out" name="Logout" onclick="openPage('http://localhost:8080/Coursework1/Logout.jsp')"/><%}
+<input type="button" value="Log Out" name="Logout" onclick="openPage('http://ac32007.cloudapp.net:8080/130025328Coursework1/Logout.jsp')"/><%}
 
 else{
-	String redirectURL = "http://localhost:8080/Coursework1/index.jsp";
+	String redirectURL = "http://ac32007.cloudapp.net:8080/130025328Coursework1/.jsp";
     response.sendRedirect(redirectURL);}
 %>
 <script type="text/javascript">
