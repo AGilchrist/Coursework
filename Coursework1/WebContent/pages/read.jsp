@@ -38,18 +38,18 @@ Name of new entry:
 Data.setID(request.getParameter("myID"));
 out.println("Please click the link below to Read the selected entry or entries <br><br>");
 if(request.getParameter("myID") != null){
-out.println("<a href=\"http://ac32007.cloudapp.net:8080/130025328Coursework1/Read/" + request.getParameter("Tablechoice") + "/" + "\">Read entry</a>");  
+out.println("<a href=\"http://localhost:8080/Coursework1/Read/" + request.getParameter("Tablechoice") + "/" + "\">Read entry</a>");  
 }else{out.println("You must provide a id number for the entry you wish to delete <br>");}
 %>   
 <br><br>
 
-<input type=button value="Back to Home Page" onclick="openPage('http://ac32007.cloudapp.net:8080/130025328Coursework1/index.jsp')">
+<input type=button value="Back to Home Page" onclick="openPage('http://localhost:8080/Coursework1/index.jsp')">
 <br>
 <br>
-<input type="button" value="Log Out" name="Logout" onclick="openPage('http://ac32007.cloudapp.net:8080/130025328Coursework1/Logout.jsp')"/><%}
+<input type="button" value="Log Out" name="Logout" onclick="openPage('http://localhost:8080/Coursework1/Logout.jsp')"/><%}
 
 else{
-	String redirectURL = "http://ac32007.cloudapp.net:8080/130025328Coursework1/index.jsp";
+	String redirectURL = "http://localhost:8080/Coursework1/index.jsp";
     response.sendRedirect(redirectURL);}
 %>
 <script type="text/javascript">

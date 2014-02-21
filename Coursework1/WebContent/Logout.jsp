@@ -14,7 +14,7 @@
         out.println("You have been logged out<br />");}
         %>
         <br>
-        <input type="button" value="Home" name="Home" onclick="openPage('http://ac32007.cloudapp.net:8080/130025328Coursework1/index.jsp')"/>
+        <input type="button" value="Home" name="Home" onclick="openPage('http://localhost:8080/Coursework1/index.jsp')"/>
         
 <script type="text/javascript">
  function openPage(pageURL)

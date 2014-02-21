@@ -18,23 +18,23 @@ if(Log.isLoggedIn()){
 <form action="#">
 <select name="URL" onchange="window.location.href= this.form.URL.options[this.form.URL.selectedIndex].value">
 <option>      </option>
-<option value="http://ac32007.cloudapp.net:8080/130025328Coursework1/pages/createmenu.jsp">Create</option>
-<option value="http://ac32007.cloudapp.net:8080/130025328Coursework1/pages/read.jsp">Read</option>
-<option value="http://ac32007.cloudapp.net:8080/130025328Coursework1/pages/updatemenu.jsp">Update</option>
-<option value="http://ac32007.cloudapp.net:8080/130025328Coursework1/pages/delete.jsp">Delete</option>
+<option value="http://localhost:8080/Coursework1/pages/createmenu.jsp">Create</option>
+<option value="http://localhost:8080/Coursework1/pages/read.jsp">Read</option>
+<option value="http://localhost:8080/Coursework1/pages/updatemenu.jsp">Update</option>
+<option value="http://localhost:8080/Coursework1/pages/delete.jsp">Delete</option>
 </select>
 <br><br>
 </form>
 
-<input type="button" value="Create Database Tables" name="Createdatabase" onclick="createdatabase('http://ac32007.cloudapp.net:8080/130025328Coursework1/Fault')"/>
+<input type="button" value="Create Database Tables" name="Createdatabase" onclick="createdatabase('http://localhost:8080/Coursework1/Fault')"/>
 
 <br><br>
-<input type="button" value="Log Out" name="Logout" onclick="openPage('http://ac32007.cloudapp.net:8080/130025328Coursework1/Logout.jsp')"/><%}
+<input type="button" value="Log Out" name="Logout" onclick="openPage('http://localhost:8080/Coursework1/Logout.jsp')"/><%}
 
 else{
 	out.println("Please Log in to access features <br />");%>
 	<br>
-    <input type="button" value="Log In" name="Login" onclick="openPage('http://ac32007.cloudapp.net:8080/130025328Coursework1/Login.jsp')"/><%}
+    <input type="button" value="Log In" name="Login" onclick="openPage('http://localhost:8080/Coursework1/Login.jsp')"/><%}
 %>
 
 <script type="text/javascript">

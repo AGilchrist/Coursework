@@ -50,7 +50,7 @@ if(request.getParameter("mySummary") != null){
 				Data.setSection(request.getParameter("mySection"));
 				if(request.getParameter("mySeverity") != null){
 					Data.setSeverity(request.getParameter("mySeverity"));
-					out.println("<a href=\"http://ac32007.cloudapp.net:8080/130025328Coursework1/Create/fault/" + "\">Create Entry</a>"); 
+					out.println("<a href=\"http://localhost:8080/Coursework1/Create/fault/" + "\">Create Entry</a>"); 
 				}else{out.println("You must fill in all fields to create an entry <br>");}
 			}else{out.println("You must fill in all fields to create an entry <br>");}
 		}else{out.println("You must fill in all fields to create an entry <br>");}
@@ -58,11 +58,11 @@ if(request.getParameter("mySummary") != null){
 }else{out.println("You must fill in all fields to create an entry <br>");}
 %>   
 <br><br>
-<input type=button value="Back to Home Page" onclick="openPage('http://ac32007.cloudapp.net:8080/130025328Coursework1/index.jsp')">
+<input type=button value="Back to Home Page" onclick="openPage('http://localhost:8080/Coursework1/index.jsp')">
 <br><br>
-<input type="button" value="Log Out" name="Logout" onclick="openPage('http://ac32007.cloudapp.net:8080/130025328Coursework1/Logout.jsp')"/><%}
+<input type="button" value="Log Out" name="Logout" onclick="openPage('http://localhost:8080/Coursework1/Logout.jsp')"/><%}
 else{
-	String redirectURL = "http://ac32007.cloudapp.net:8080/130025328Coursework1/index.jsp";
+	String redirectURL = "http://localhost:8080/Coursework1/index.jsp";
     response.sendRedirect(redirectURL);}
 %>
 <script type="text/javascript">
