@@ -203,10 +203,6 @@ return;
 System.out.println("Can not select count "+ex);
 return;
 }
-
-
- 
-
 }
 
 public void createSchema(){
@@ -214,7 +210,7 @@ String url = "jdbc:mysql://localhost";
 Connection conn=null;
 try {
 Class.forName ("com.mysql.jdbc.Driver").newInstance ();
-conn = DriverManager.getConnection (url, "root", "RootUser");
+conn = DriverManager.getConnection (url, "root", "Cl1m8t3;");
 
 }catch (Exception et){
 System.out.println("Can't get conenction to create schema "+et);
@@ -229,6 +225,6 @@ conn.close();
 System.out.println("Can not create schema ");
 return;
 }
-
 }
+
 }

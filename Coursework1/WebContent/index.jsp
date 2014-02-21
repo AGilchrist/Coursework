@@ -14,8 +14,7 @@
 <body>
 <%
 if(Log.isLoggedIn()){
-    out.println("Hello please select the action you want to carry out <br />");
-    %>
+    out.println("Hello please select the action you want to carry out <br />");%>
 <form action="#">
 <select name="URL" onchange="window.location.href= this.form.URL.options[this.form.URL.selectedIndex].value">
 <option>      </option>
@@ -26,13 +25,9 @@ if(Log.isLoggedIn()){
 </select>
 <br><br>
 </form>
-<%
-if(Data.getDatabase() == false){
-%>
-<input type="button" value="Create Database Tables" name="Createdatabase" onclick="createdatabase('http://ac32007.cloudapp.net:8080/130025328Coursework1/Fault')"/><%
-Data.setDatabase(true);
-}
-%>
+
+<input type="button" value="Create Database Tables" name="Createdatabase" onclick="createdatabase('http://ac32007.cloudapp.net:8080/130025328Coursework1/Fault')"/>
+
 <br><br>
 <input type="button" value="Log Out" name="Logout" onclick="openPage('http://ac32007.cloudapp.net:8080/130025328Coursework1/Logout.jsp')"/><%}
 
