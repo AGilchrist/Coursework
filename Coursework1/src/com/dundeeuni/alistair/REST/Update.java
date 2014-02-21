@@ -135,7 +135,7 @@ Conn.close();
 catch (Exception et) {
 return;
 }
-response.sendRedirect("http://localhost:8080/Coursework1/index.jsp");
+response.sendRedirect("http://ac32007.cloudapp.net:8080/130025328Coursework1/index.jsp");
 }
 
 private void error(String mess, PrintWriter out){

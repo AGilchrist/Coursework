@@ -57,7 +57,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
 // TODO Auto-generated method stub
 //String args[]=Convertors.SplitRequestPath(request);
 
-response.sendRedirect("http://localhost:8080/Coursework1/index.jsp");
+response.sendRedirect("http://ac32007.cloudapp.net:8080/130025328Coursework1/index.jsp");
 }
 
 /**
