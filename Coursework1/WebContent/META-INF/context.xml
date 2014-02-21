@@ -2,6 +2,6 @@
 <Context>
 <Resource name="jdbc/130025328Faultdb" type="javax.sql.DataSource" auth="Container" factory="org.apache.tomcat.jdbc.pool.DataSourceFactory" 
 driverClassName="com.mysql.jdbc.Driver" url="jdbc:mysql://localhost:3306/130025328Faultdb" 
-username="root" password="RootUser" 
+username="root" password="Cl1m8t3;"
 jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"/>
 </Context>
