@@ -91,27 +91,21 @@ return;
 }
 ID = data.getID();
 switch (command){
-case 1: SQL.readfault(pmst, Conn, ID, out);
+case 1: SQL.readfault(pmst, Conn, response, ID, out);
 break;
-case 2: SQL.readreporter(pmst, Conn, ID, out);
+case 2: SQL.readreporter(pmst, Conn, response, ID, out);
 break;
-case 3: SQL.readdeveloper(pmst, Conn, ID, out);
+case 3: SQL.readdeveloper(pmst, Conn, response, ID, out);
 break;
-case 4: SQL.readadministrator(pmst, Conn, ID, out);
+case 4: SQL.readadministrator(pmst, Conn, response, ID, out);
 break;
 default: error("No such table",out);
 }
 Conn.close();
-try {
-	TimeUnit.SECONDS.sleep(10);
-} catch (InterruptedException et) {
-	out.print("The timer has failed");
-}
 }
 catch (Exception et) {
 return;
 }
-response.sendRedirect("http://ac32007.cloudapp.net:8080/130025328Coursework1/index.jsp");
 }
 
 private void error(String mess, PrintWriter out){

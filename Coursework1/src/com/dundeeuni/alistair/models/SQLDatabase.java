@@ -1,11 +1,15 @@
 package com.dundeeuni.alistair.models;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.concurrent.TimeUnit;
+
+import javax.servlet.http.HttpServletResponse;
 
 public class SQLDatabase {
 	 public SQLDatabase(){}
@@ -74,15 +78,17 @@ public void createadministrator(PreparedStatement pstmt, Connection Conn, String
 
 //Read Functionality
 	
-public void readfault(PreparedStatement pstmt, Connection Conn, String faultid, PrintWriter out ) throws SQLException{
+public void readfault(PreparedStatement pstmt, Connection Conn, HttpServletResponse response, String faultid, PrintWriter out ) throws SQLException, InterruptedException, IOException{
 	if(faultid.equals("null")){
 		pstmt = Conn.prepareStatement("SELECT * FROM `fault`");
 		try {
 			ResultSet rs = pstmt.executeQuery();
-			print(rs,out);
+			print(rs, out);
+			TimeUnit.SECONDS.sleep(5);
+		    response.sendRedirect("http://ac32007.cloudapp.net:8080/130025328Coursework1/index.jsp");
 		} catch (Exception ex) {
 			System.out.println("Cannot do that "+ex);
-		return;	
+			return;	
 		}
 	}else{
 		pstmt = Conn.prepareStatement("SELECT * FROM `fault` WHERE idfault = ?");
@@ -90,14 +96,16 @@ public void readfault(PreparedStatement pstmt, Connection Conn, String faultid, 
 	try {
 		ResultSet rs = pstmt.executeQuery();
 		print(rs,out);
+		TimeUnit.SECONDS.sleep(5);
+	    response.sendRedirect("http://ac32007.cloudapp.net:8080/130025328Coursework1/index.jsp");
 	} catch (Exception ex) {
 		System.out.println("Cannot do that "+ex);
 	return;	
 		}
-	};
+	}
 }
 
-public void readreporter(PreparedStatement pstmt, Connection Conn, String authorid, PrintWriter out ) throws SQLException{
+public void readreporter(PreparedStatement pstmt, Connection Conn, HttpServletResponse response, String authorid, PrintWriter out ) throws SQLException{
 	if(authorid.equals("null")){
 		pstmt = Conn.prepareStatement("SELECT * FROM `author`");
 		try {
@@ -117,10 +125,10 @@ public void readreporter(PreparedStatement pstmt, Connection Conn, String author
 			System.out.println("Cannot do that "+ex);
 		return;	
 		}
-	};
+	}
 }
 
-public void readdeveloper(PreparedStatement pstmt, Connection Conn, String developerid, PrintWriter out ) throws SQLException{
+public void readdeveloper(PreparedStatement pstmt, Connection Conn, HttpServletResponse response, String developerid, PrintWriter out ) throws SQLException{
 	if(developerid.equals("null")){
 		pstmt = Conn.prepareStatement("SELECT * FROM `developer`");
 		try {
@@ -140,10 +148,10 @@ public void readdeveloper(PreparedStatement pstmt, Connection Conn, String devel
 			System.out.println("Cannot do that "+ex);
 		return;	
 		}
-	};
+	}
 }
 
-public void readadministrator(PreparedStatement pstmt, Connection Conn, String administratorid, PrintWriter out ) throws SQLException{
+public void readadministrator(PreparedStatement pstmt, Connection Conn, HttpServletResponse response, String administratorid, PrintWriter out ) throws SQLException{
 	if(administratorid.equals("null")){
 		pstmt = Conn.prepareStatement("SELECT * FROM `administrator`");
 		try {
@@ -163,7 +171,7 @@ public void readadministrator(PreparedStatement pstmt, Connection Conn, String a
 			System.out.println("Cannot do that "+ex);
 		return;	
 		}
-	};
+	}
 }
 
 
@@ -173,7 +181,7 @@ public void readadministrator(PreparedStatement pstmt, Connection Conn, String a
 
 public void updatefault(PreparedStatement pstmt, Connection Conn, String oldid, String summary, String details, String author, String section, String severity, PrintWriter out ) throws SQLException{
 	int id = Integer.parseInt(oldid);
-	if(!summary.equals("null")){
+	if(!summary.equals("")){
 		try{
 			pstmt = Conn.prepareStatement("UPDATE `fault` SET summary = ? WHERE idfault = ?");
 			pstmt.setString(1, summary);
@@ -184,7 +192,7 @@ public void updatefault(PreparedStatement pstmt, Connection Conn, String oldid, 
 			} 
 		}
 	
-	if(!details.equals("null")){
+	if(!details.equals("")){
 		try{
 			pstmt = Conn.prepareStatement("UPDATE `fault` SET details = ? WHERE idfault = ?");
 			pstmt.setString(1, details);
@@ -195,7 +203,7 @@ public void updatefault(PreparedStatement pstmt, Connection Conn, String oldid, 
 			} 
 		}
 	
-	if(!author.equals("null")){
+	if(!author.equals("")){
 		int aint = Integer.parseInt(author);
 			try{
 			pstmt = Conn.prepareStatement("UPDATE `fault` SET author_idauthor = ? WHERE idfault = ?");
@@ -207,7 +215,7 @@ public void updatefault(PreparedStatement pstmt, Connection Conn, String oldid, 
 			} 
 		}
 	
-	if(!section.equals("null")){
+	if(!section.equals("")){
 		try{
 			int sectionint = Integer.parseInt(section);
 			pstmt = Conn.prepareStatement("UPDATE `fault` SET section_idsection = (?) WHERE idfault = ?");
@@ -219,7 +227,7 @@ public void updatefault(PreparedStatement pstmt, Connection Conn, String oldid, 
 			} 
 		}
 	
-	if(!severity.equals("null")){
+	if(!severity.equals("")){
 		try{
 			int severityint = Integer.parseInt(severity);
 			pstmt = Conn.prepareStatement("UPDATE `fault` SET severity = ? WHERE idfault = ?");
@@ -234,7 +242,7 @@ public void updatefault(PreparedStatement pstmt, Connection Conn, String oldid, 
 
 public void updatereporter(PreparedStatement pstmt, Connection Conn, String oldid, String name, String email, PrintWriter out )throws SQLException{
 	int id = Integer.parseInt(oldid);
-	if(!name.equals("null")){
+	if(!name.equals("")){
 		try{
 			pstmt = Conn.prepareStatement("UPDATE `author` SET name = ? WHERE idauthor = ?");
 			pstmt.setString(1, name);
@@ -245,7 +253,7 @@ public void updatereporter(PreparedStatement pstmt, Connection Conn, String oldi
 			} 
 		}
 
-	if(!email.equals("null")){
+	if(!email.equals("")){
 		try{
 			pstmt = Conn.prepareStatement("UPDATE `author` SET email = ? WHERE idauthor = ?");
 			pstmt.setString(1, email);
@@ -259,7 +267,7 @@ public void updatereporter(PreparedStatement pstmt, Connection Conn, String oldi
 
 public void updatedeveloper(PreparedStatement pstmt, Connection Conn, String oldid, String name, String email, PrintWriter out )throws SQLException{
 	int id = Integer.parseInt(oldid);
-	if(!name.equals("null")){
+	if(!name.equals("")){
 		try{
 			pstmt = Conn.prepareStatement("UPDATE `developer` SET name = ? WHERE iddeveloper = ?");
 			pstmt.setString(1, name);
@@ -270,7 +278,7 @@ public void updatedeveloper(PreparedStatement pstmt, Connection Conn, String old
 			} 
 		}
 	
-	if(!email.equals("null")){
+	if(!email.equals("")){
 		try{
 			pstmt = Conn.prepareStatement("UPDATE `developer` SET email = ? WHERE iddeveloper = ?");
 			pstmt.setString(1, email);
@@ -284,7 +292,7 @@ public void updatedeveloper(PreparedStatement pstmt, Connection Conn, String old
 
 public void updateadministrator(PreparedStatement pstmt, Connection Conn, String oldid, String name, String email, PrintWriter out )throws SQLException{
 	int id = Integer.parseInt(oldid);
-	if(!name.equals("null")){
+	if(!name.equals("")){
 		try{
 			pstmt = Conn.prepareStatement("UPDATE `administrator` SET name = ? WHERE idadministrator = ?");
 			pstmt.setString(1, name);
@@ -295,7 +303,7 @@ public void updateadministrator(PreparedStatement pstmt, Connection Conn, String
 			} 
 		}
 	
-	if(!email.equals("null")){
+	if(!email.equals("")){
 		try{
 			pstmt = Conn.prepareStatement("UPDATE `administrator` SET email = ? WHERE idadministrator = ?");
 			pstmt.setString(1, email);
@@ -358,7 +366,7 @@ public void deleteadministrator(PreparedStatement pstmt, Connection Conn, String
 }
 	
 
-private void print(ResultSet rs, PrintWriter out) throws SQLException{
+private void print(ResultSet rs, PrintWriter out) throws SQLException, InterruptedException{
 		ResultSetMetaData meta = rs.getMetaData();
 	    int numberofcolumns = meta.getColumnCount();
 	    while (rs.next()) {
