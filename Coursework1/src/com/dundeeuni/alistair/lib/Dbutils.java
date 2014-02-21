@@ -220,7 +220,7 @@ conn = DriverManager.getConnection (url, "root", "Cl1m8t3;");
 System.out.println("Can't get conenction to create schema "+et);
 return;
 }
-String sqlcreateSchema="Create database if not exists faultdb ;";
+String sqlcreateSchema="Create database if not exists 130025328faultdb ;";
 try{
 java.sql.Statement statement=conn.createStatement();
 statement.execute(sqlcreateSchema);
